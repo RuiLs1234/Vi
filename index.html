@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clickable Map of Portugal District Capitals</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 600px;
+            /* Set the height of the map */
+            width: 100%;
+            /* Set the width of the map */
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Clickable District Capitals of Mainland Portugal</h1>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map
+        const map = L.map('map').setView([39.5, -8.0], 6); // Centered on Portugal
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+
+        // Define district capitals with their approximate latitude and longitude
+        const districtCapitals = {
+            "Lisboa": [38.7169, -9.1399],
+            "Porto": [41.1496, -8.6109],
+            "Braga": [41.5454, -8.4265],
+            "Coimbra": [40.2033, -8.4103],
+            "Aveiro": [40.6400, -8.6455],
+            "Leiria": [39.7431, -8.8065],
+            "Castelo Branco": [39.4600, -7.4900],
+            "Santarém": [39.2366, -8.6855],
+            "Viseu": [40.6613, -7.9107],
+            "Faro": [37.0169, -7.9300],
+            "Setúbal": [38.5200, -8.8900],
+            "Évora": [38.5724, -7.9078],
+            "Portalegre": [39.2923, -7.4397],
+            "Bragança": [41.8065, -6.7487],
+            "Guarda": [40.5376, -7.2690],
+            "Viana do Castelo": [41.6902, -8.8274],
+            "Beja": [38.0151, -7.8632]
+        };
+
+        // Function to create circle markers for each district capital
+        function addDistrictCapitalMarkers() {
+            for (const [name, coords] of Object.entries(districtCapitals)) {
+                const marker = L.circleMarker(coords, {
+                    radius: 10, // Size of the circle marker
+                    color: 'blue', // Border color
+                    fillColor: 'lightblue', // Fill color
+                    fillOpacity: 0.7, // Fill opacity
+                    weight: 2 // Border thickness
+                }).addTo(map);
+
+                marker.bindPopup(name);
+                marker.on('click', function() {
+                    alert(`You clicked on ${name}!`);
+                });
+            }
+        }
+
+        addDistrictCapitalMarkers(); // Call the function to add markers
+    </script>
+</body>
+
+</html>
