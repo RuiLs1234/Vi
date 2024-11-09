@@ -9,10 +9,29 @@
     <style>
         #map {
             height: 600px;
-            /* Set the height of the map */
             width: 100%;
-            /* Set the width of the map */
             margin: 0 auto;
+        }
+        
+        .line {
+            fill: none;
+            stroke-width: 2;
+        }
+        
+        .line-house {
+            stroke: steelblue;
+        }
+        
+        .line-apartment {
+            stroke: orange;
+        }
+        
+        .dot {
+            fill: steelblue;
+        }
+        
+        .dot-apartment {
+            fill: orange;
         }
     </style>
 </head>
@@ -22,6 +41,7 @@
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <script>
         // Initialize the map
         const map = L.map('map').setView([39.5, -8.0], 6); // Centered on Portugal
@@ -52,6 +72,180 @@
             "Beja": [38.0151, -7.8632]
         };
 
+        // Housing data for Lisbon
+        const housingDataLisbon = [{
+            year: 2014,
+            housePrice: 670000,
+            apartmentPrice: 500000,
+            rent: 7.8
+        }, {
+            year: 2015,
+            housePrice: 695000,
+            apartmentPrice: 525000,
+            rent: 8.2
+        }, {
+            year: 2016,
+            housePrice: 725000,
+            apartmentPrice: 550000,
+            rent: 8.6
+        }, {
+            year: 2017,
+            housePrice: 770000,
+            apartmentPrice: 580000,
+            rent: 9.0
+        }, {
+            year: 2018,
+            housePrice: 820000,
+            apartmentPrice: 620000,
+            rent: 9.4
+        }, {
+            year: 2019,
+            housePrice: 860000,
+            apartmentPrice: 650000,
+            rent: 10.0
+        }, {
+            year: 2020,
+            housePrice: 910000,
+            apartmentPrice: 675000,
+            rent: 10.5
+        }, {
+            year: 2021,
+            housePrice: 950000,
+            apartmentPrice: 700000,
+            rent: 11.0
+        }, {
+            year: 2022,
+            housePrice: 1000000,
+            apartmentPrice: 730000,
+            rent: 11.5
+        }, {
+            year: 2023,
+            housePrice: 1050000,
+            apartmentPrice: 760000,
+            rent: 12.0
+        }, {
+            year: 2024,
+            housePrice: 1128400,
+            apartmentPrice: 800000,
+            rent: 12.99
+        }, ];
+
+        // Housing data for Porto
+        const housingDataPorto = [{
+            year: 2014,
+            housePrice: 180000,
+            apartmentPrice: 140000,
+            rent: 6.00
+        }, {
+            year: 2015,
+            housePrice: 190000,
+            apartmentPrice: 150000,
+            rent: 6.30
+        }, {
+            year: 2016,
+            housePrice: 210000,
+            apartmentPrice: 160000,
+            rent: 6.60
+        }, {
+            year: 2017,
+            housePrice: 230000,
+            apartmentPrice: 180000,
+            rent: 7.20
+        }, {
+            year: 2018,
+            housePrice: 260000,
+            apartmentPrice: 200000,
+            rent: 8.00
+        }, {
+            year: 2019,
+            housePrice: 290000,
+            apartmentPrice: 220000,
+            rent: 8.60
+        }, {
+            year: 2020,
+            housePrice: 320000,
+            apartmentPrice: 240000,
+            rent: 9.00
+        }, {
+            year: 2021,
+            housePrice: 350000,
+            apartmentPrice: 270000,
+            rent: 9.40
+        }, {
+            year: 2022,
+            housePrice: 380000,
+            apartmentPrice: 300000,
+            rent: 9.70
+        }, {
+            year: 2023,
+            housePrice: 400000,
+            apartmentPrice: 330000,
+            rent: 10.00
+        }, {
+            year: 2024,
+            housePrice: 430000,
+            apartmentPrice: 350000,
+            rent: 10.50
+        }, ];
+
+
+        const housingDataAveiro = [{
+            year: 2014,
+            housePrice: 180000,
+            apartmentPrice: 140000,
+            rent: 6.00
+        }, {
+            year: 2015,
+            housePrice: 190000,
+            apartmentPrice: 150000,
+            rent: 6.30
+        }, {
+            year: 2016,
+            housePrice: 210000,
+            apartmentPrice: 160000,
+            rent: 6.60
+        }, {
+            year: 2017,
+            housePrice: 230000,
+            apartmentPrice: 180000,
+            rent: 7.20
+        }, {
+            year: 2018,
+            housePrice: 260000,
+            apartmentPrice: 200000,
+            rent: 8.00
+        }, {
+            year: 2019,
+            housePrice: 290000,
+            apartmentPrice: 220000,
+            rent: 8.60
+        }, {
+            year: 2020,
+            housePrice: 320000,
+            apartmentPrice: 240000,
+            rent: 9.00
+        }, {
+            year: 2021,
+            housePrice: 350000,
+            apartmentPrice: 270000,
+            rent: 9.40
+        }, {
+            year: 2022,
+            housePrice: 380000,
+            apartmentPrice: 300000,
+            rent: 9.70
+        }, {
+            year: 2023,
+            housePrice: 400000,
+            apartmentPrice: 330000,
+            rent: 10.00
+        }, {
+            year: 2024,
+            housePrice: 430000,
+            apartmentPrice: 350000,
+            rent: 10.50
+        }, ];
+
         // Function to create circle markers for each district capital
         function addDistrictCapitalMarkers() {
             for (const [name, coords] of Object.entries(districtCapitals)) {
@@ -65,10 +259,106 @@
 
                 marker.bindPopup(name);
                 marker.on('click', function() {
-                    alert(`You clicked on ${name}!`);
+                    drawChart(name, coords); // Pass city name and coordinates
                 });
             }
         }
+
+        function drawChart(city, coords) {
+            const housingData = city === "Lisboa" ?
+                housingDataLisbon :
+                city === "Porto" ?
+                housingDataPorto :
+                city === "Aveiro" ?
+                housingDataAveiro :
+                []; // Default to an empty array if the city is not recognized
+
+            const popup = L.popup({
+                    minWidth: 800,
+                    maxWidth: 1000
+                }) // Set larger popup width
+                .setLatLng(coords)
+                .setContent('<div id="chart" style="width: 800px; height: 500px;"></div>') // Increased chart height
+                .openOn(map);
+
+            // Wait for the popup to be opened before drawing the chart
+            setTimeout(() => {
+                const margin = {
+                        top: 20,
+                        right: 30,
+                        bottom: 40,
+                        left: 70
+                    }, // Increased left margin for Y-axis
+                    width = 800 - margin.left - margin.right,
+                    height = 500 - margin.top - margin.bottom; // Increased height for chart
+
+                const svg = d3.select("#chart")
+                    .append("svg")
+                    .attr("width", width + margin.left + margin.right)
+                    .attr("height", height + margin.top + margin.bottom)
+                    .append("g")
+                    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+                const x = d3.scalePoint()
+                    .domain(housingData.map(d => d.year))
+                    .range([0, width]);
+
+                const y = d3.scaleLinear()
+                    .domain([0, d3.max(housingData, d => Math.max(d.housePrice, d.apartmentPrice)) * 1.1]) // Added scaling factor to accommodate values
+                    .nice()
+                    .range([height, 0]);
+
+                // Add x-axis
+                svg.append("g")
+                    .attr("class", "x-axis")
+                    .attr("transform", `translate(0,${height})`)
+                    .call(d3.axisBottom(x));
+
+                // Add y-axis
+                svg.append("g")
+                    .attr("class", "y-axis")
+                    .call(d3.axisLeft(y).ticks(10).tickFormat(d => `€${d}`)); // Format ticks with Euro sign
+
+                // Create line for house prices
+                const lineHouse = d3.line()
+                    .x(d => x(d.year))
+                    .y(d => y(d.housePrice));
+
+                svg.append("path")
+                    .datum(housingData)
+                    .attr("class", "line line-house")
+                    .attr("d", lineHouse);
+
+                // Create line for apartment prices
+                const lineApartment = d3.line()
+                    .x(d => x(d.year))
+                    .y(d => y(d.apartmentPrice));
+
+                svg.append("path")
+                    .datum(housingData)
+                    .attr("class", "line line-apartment")
+                    .attr("d", lineApartment);
+
+                // Add dots for house prices
+                svg.selectAll(".dot")
+                    .data(housingData)
+                    .enter().append("circle")
+                    .attr("class", "dot")
+                    .attr("cx", d => x(d.year))
+                    .attr("cy", d => y(d.housePrice))
+                    .attr("r", 4);
+
+                // Add dots for apartment prices
+                svg.selectAll(".dot-apartment")
+                    .data(housingData)
+                    .enter().append("circle")
+                    .attr("class", "dot-apartment")
+                    .attr("cx", d => x(d.year))
+                    .attr("cy", d => y(d.apartmentPrice))
+                    .attr("r", 4);
+            }, 50); // Delay to ensure popup is opened before drawing
+        }
+
 
         addDistrictCapitalMarkers(); // Call the function to add markers
     </script>
