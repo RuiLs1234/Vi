@@ -1,0 +1,740 @@
+{ "type": "Topology", "arcs": [
+        [
+            [832, 1944],
+            [37, -7],
+            [-3, -52],
+            [-94, -77],
+            [-31, -39],
+            [12, -61],
+            [105, -34],
+            [73, 1],
+            [56, 17],
+            [33, -38],
+            [33, -74],
+            [-13, -60],
+            [127, -65]
+        ],
+        [
+            [1167, 1455],
+            [28, -73],
+            [-4, -30],
+            [-131, -51],
+            [-9, -35],
+            [-45, -1],
+            [-47, -73],
+            [36, -51],
+            [44, -18],
+            [14, -34],
+            [-5, -79],
+            [-26, -67],
+            [-90, 21],
+            [-78, -15],
+            [-45, -45],
+            [-20, -57],
+            [-76, -2],
+            [-44, 61],
+            [-59, 15]
+        ],
+        [
+            [610, 921],
+            [-3, 82],
+            [-54, 78],
+            [45, 96],
+            [36, 136],
+            [-18, 187],
+            [-63, 111],
+            [96, -37],
+            [17, 96],
+            [-48, 20],
+            [4, -57],
+            [-103, 34],
+            [-42, -8],
+            [-82, -70],
+            [-85, -10],
+            [-47, -21],
+            [-27, 28],
+            [36, 37],
+            [5, 86],
+            [-60, 124],
+            [175, 31],
+            [95, 89]
+        ],
+        [
+            [487, 1953],
+            [17, 3]
+        ],
+        [
+            [504, 1956],
+            [29, -40],
+            [42, 16],
+            [49, -24],
+            [34, 21],
+            [38, 88],
+            [86, -55],
+            [50, -18]
+        ],
+        [
+            [1003, 3690],
+            [-42, -30],
+            [-51, -64],
+            [-51, 6],
+            [-4, 34],
+            [30, 59],
+            [-16, 48],
+            [-59, -10],
+            [1, 57],
+            [-33, 22],
+            [-29, -57],
+            [-29, 4],
+            [-98, 96]
+        ],
+        [
+            [622, 3855],
+            [55, 132],
+            [73, 54],
+            [-52, 91],
+            [40, 260]
+        ],
+        [
+            [738, 4392],
+            [60, -2],
+            [52, 19],
+            [96, -11],
+            [61, 24],
+            [49, 42]
+        ],
+        [
+            [1056, 4464],
+            [53, -32],
+            [4, -48],
+            [66, -30],
+            [34, -119],
+            [-78, -21],
+            [-61, -86],
+            [-40, -37],
+            [16, -67],
+            [-4, -100],
+            [42, -79],
+            [-68, -32],
+            [5, -52],
+            [-22, -71]
+        ],
+        [
+            [1199, 3200],
+            [-69, -73],
+            [-48, -10],
+            [-17, -55]
+        ],
+        [
+            [1065, 3062],
+            [-142, -57],
+            [-25, 104],
+            [-87, -47],
+            [-43, -6],
+            [-49, -34],
+            [18, -102],
+            [-34, -24],
+            [20, -84],
+            [-69, -93],
+            [-99, 0],
+            [-38, -21],
+            [-27, -56],
+            [-52, -51],
+            [4, -68]
+        ],
+        [
+            [442, 2523],
+            [-63, 14],
+            [-89, -99],
+            [-34, 79],
+            [-36, 25],
+            [-86, -26]
+        ],
+        [
+            [134, 2516],
+            [-4, 82],
+            [98, 56],
+            [50, 79],
+            [41, 26],
+            [39, 69],
+            [17, 110],
+            [68, 177],
+            [79, 222]
+        ],
+        [
+            [522, 3337],
+            [76, -29],
+            [41, 18],
+            [80, -10],
+            [41, -34],
+            [66, 25],
+            [8, -60],
+            [82, 52],
+            [33, -2],
+            [24, -59],
+            [31, -13],
+            [49, 78],
+            [51, 52],
+            [53, 25],
+            [25, -27],
+            [-4, -49],
+            [37, -56],
+            [-16, -48]
+        ],
+        [
+            [1152, 5258],
+            [-118, -51],
+            [-76, -3],
+            [-95, -39],
+            [-35, -107],
+            [-74, 24],
+            [-130, -38],
+            [-30, 2]
+        ],
+        [
+            [594, 5046],
+            [-6, 71],
+            [-47, 59],
+            [12, 133],
+            [91, 79],
+            [10, 40],
+            [70, 34],
+            [38, 55],
+            [47, 4],
+            [63, 31],
+            [134, 20],
+            [109, 57],
+            [27, -100],
+            [47, 12],
+            [37, -35],
+            [-12, -32],
+            [-64, -50],
+            [-43, -86],
+            [41, -31],
+            [4, -49]
+        ],
+        [
+            [2078, 1309],
+            [47, -7],
+            [32, 25],
+            [69, -4],
+            [-67, -189],
+            [-86, 19],
+            [-26, -43],
+            [-105, -26],
+            [4, -30],
+            [-33, -107],
+            [-24, -42],
+            [-80, -67],
+            [-28, -55],
+            [-12, -69],
+            [-51, -76],
+            [14, -42]
+        ],
+        [
+            [1732, 596],
+            [-47, -4],
+            [-45, -33],
+            [-76, 7],
+            [-158, -79],
+            [-18, -20],
+            [-64, -9],
+            [-14, -43],
+            [-63, -38],
+            [-87, 11],
+            [-85, 64],
+            [-11, 35],
+            [-116, -15],
+            [-45, -42],
+            [-84, 31],
+            [-65, -22],
+            [-72, 18],
+            [-77, 53]
+        ],
+        [
+            [605, 510],
+            [5, 120],
+            [-22, 45],
+            [24, 105],
+            [-15, 47],
+            [13, 94]
+        ],
+        [
+            [1167, 1455],
+            [105, 7],
+            [97, -23],
+            [93, -56],
+            [44, -5],
+            [91, -43],
+            [132, -12],
+            [90, 78],
+            [12, 34],
+            [104, 34],
+            [25, -58],
+            [40, -28],
+            [29, -67],
+            [49, -7]
+        ],
+        [
+            [1983, 1943],
+            [-51, -58],
+            [-5, -81],
+            [13, -38],
+            [-37, -51],
+            [-36, -120],
+            [37, -24],
+            [130, -166],
+            [44, -96]
+        ],
+        [
+            [832, 1944],
+            [81, 42],
+            [69, 51],
+            [78, 5],
+            [72, -44],
+            [44, -46],
+            [20, 29],
+            [-40, 44],
+            [5, 27],
+            [-77, 43],
+            [24, 84],
+            [29, 19]
+        ],
+        [
+            [1137, 2198],
+            [45, 27],
+            [37, -4],
+            [71, -43],
+            [34, -41],
+            [62, 21],
+            [63, -69],
+            [73, 9],
+            [22, 25],
+            [85, -11],
+            [96, 76],
+            [54, -39],
+            [41, -124],
+            [38, -44],
+            [69, 37],
+            [63, -3],
+            [-7, -72]
+        ],
+        [
+            [1732, 596],
+            [33, -37],
+            [27, -117],
+            [10, -139],
+            [17, -72],
+            [-85, -23],
+            [-239, -162],
+            [-29, -26],
+            [-45, 10],
+            [-96, -7],
+            [-109, 74],
+            [-63, 20],
+            [-100, -11],
+            [-63, 22],
+            [-64, -17],
+            [-86, 38],
+            [-78, 4],
+            [-51, -42],
+            [-54, 0],
+            [-114, -38],
+            [-59, -43],
+            [-32, 20],
+            [-2, 40],
+            [63, 116],
+            [-8, 32],
+            [36, 36],
+            [-2, 84],
+            [39, 55],
+            [27, 97]
+        ],
+        [
+            [487, 1953],
+            [-47, 98],
+            [-13, 52],
+            [60, 111],
+            [85, 30],
+            [48, 30]
+        ],
+        [
+            [620, 2274],
+            [-82, -125],
+            [-30, -79],
+            [-32, -46],
+            [28, -68]
+        ],
+        [
+            [442, 2523],
+            [9, -42],
+            [60, -17],
+            [35, 10],
+            [51, -58],
+            [-75, -25],
+            [28, -41],
+            [69, -63]
+        ],
+        [
+            [619, 2287],
+            [-39, -28],
+            [-75, -8],
+            [-71, -100],
+            [-90, -156],
+            [8, -83],
+            [-13, -26],
+            [-94, -22],
+            [-56, 6],
+            [-32, -31],
+            [-94, 40],
+            [-54, 0],
+            [0, 122],
+            [31, 34],
+            [29, 88],
+            [-12, 107],
+            [12, 53],
+            [62, 129],
+            [3, 104]
+        ],
+        [
+            [1696, 2934],
+            [35, -90],
+            [101, -109],
+            [75, -40],
+            [-16, -79],
+            [4, -47],
+            [66, -77],
+            [-13, -43],
+            [19, -39],
+            [67, -27],
+            [0, -62],
+            [35, -17],
+            [77, 12],
+            [34, -26],
+            [23, -77],
+            [-42, -78],
+            [-39, -41],
+            [9, -54],
+            [-83, -39],
+            [-65, -58]
+        ],
+        [
+            [1137, 2198],
+            [-50, 23],
+            [-69, 104],
+            [37, 51],
+            [121, 96],
+            [58, 36],
+            [54, 81],
+            [65, 60],
+            [-53, 58],
+            [36, 75],
+            [28, 18],
+            [65, -36],
+            [50, 40]
+        ],
+        [
+            [1479, 2804],
+            [95, 104],
+            [49, -12],
+            [73, 38]
+        ],
+        [
+            [1065, 3062],
+            [45, -46],
+            [7, -115],
+            [70, -33],
+            [68, 9],
+            [-8, 41],
+            [21, 81],
+            [71, 1],
+            [13, -78],
+            [73, -33],
+            [54, -85]
+        ],
+        [
+            [620, 2274],
+            [-1, 13]
+        ],
+        [
+            [1330, 4776],
+            [-53, -49],
+            [-66, 27],
+            [-50, 56],
+            [-57, -4],
+            [-76, -33],
+            [-142, 6],
+            [-43, -23],
+            [-61, -2],
+            [4, 59],
+            [-59, 44],
+            [-94, 25]
+        ],
+        [
+            [633, 4882],
+            [-39, 164]
+        ],
+        [
+            [1152, 5258],
+            [113, 4]
+        ],
+        [
+            [1265, 5262],
+            [-39, -114],
+            [93, -37],
+            [-9, -72],
+            [89, -24],
+            [44, 27],
+            [28, -34],
+            [-37, -62],
+            [-59, -44],
+            [-45, -126]
+        ],
+        [
+            [2243, 4426],
+            [-52, 5],
+            [-77, 37],
+            [-44, 84],
+            [-152, -5]
+        ],
+        [
+            [1918, 4547],
+            [-51, 7],
+            [-64, 55]
+        ],
+        [
+            [1803, 4609],
+            [71, 126],
+            [-10, 120],
+            [110, 96],
+            [-14, 80],
+            [28, 91],
+            [42, 65],
+            [-30, 94],
+            [-2, 60]
+        ],
+        [
+            [1998, 5341],
+            [8, 81],
+            [47, 26],
+            [82, -49],
+            [52, 26],
+            [41, -25],
+            [78, 0],
+            [53, 40],
+            [32, -46],
+            [88, -5],
+            [63, 23],
+            [8, -78],
+            [45, -16],
+            [-47, -139],
+            [20, -71],
+            [36, -26],
+            [46, 28],
+            [83, -14],
+            [81, -39],
+            [58, -63],
+            [-70, -91],
+            [-30, -73],
+            [-48, -24],
+            [-48, -63],
+            [-57, -48],
+            [-59, -27],
+            [-72, -3],
+            [-53, -80],
+            [-45, -46],
+            [-5, -47],
+            [-46, -59],
+            [-96, -7]
+        ],
+        [
+            [2230, 3563],
+            [-72, -42],
+            [-16, -38],
+            [24, -68],
+            [53, -17],
+            [66, -102],
+            [-37, -95],
+            [-2, -55],
+            [-66, -75],
+            [-8, -95],
+            [-23, -29],
+            [-128, -15],
+            [-46, 12],
+            [-92, -16],
+            [-187, 6]
+        ],
+        [
+            [1199, 3200],
+            [87, 59],
+            [95, 31],
+            [19, 47],
+            [135, 51],
+            [-1, 37],
+            [-57, 62],
+            [21, 51]
+        ],
+        [
+            [1498, 3538],
+            [121, 60],
+            [37, 43],
+            [65, 12],
+            [64, 82],
+            [54, -33],
+            [57, 29],
+            [48, 0],
+            [-8, -64],
+            [-35, -71],
+            [64, -20],
+            [81, 14],
+            [38, 43],
+            [30, -36],
+            [68, -1],
+            [48, -33]
+        ],
+        [
+            [1003, 3690],
+            [106, -56],
+            [48, 28],
+            [50, -8],
+            [66, 47],
+            [101, 53],
+            [21, 31],
+            [66, 42]
+        ],
+        [
+            [1461, 3827],
+            [21, -44],
+            [-3, -55],
+            [30, -86],
+            [-48, -72],
+            [37, -32]
+        ],
+        [
+            [522, 3337],
+            [43, 100],
+            [-48, 67],
+            [37, 81],
+            [68, 270]
+        ],
+        [
+            [2243, 4426],
+            [-13, -35],
+            [50, -73],
+            [42, -118],
+            [0, -106],
+            [20, -104],
+            [-30, -90],
+            [29, -68],
+            [-36, -65],
+            [5, -36],
+            [49, -58],
+            [-60, -60],
+            [-13, -39],
+            [-56, -11]
+        ],
+        [
+            [1461, 3827],
+            [121, 59],
+            [95, 22],
+            [-4, 23],
+            [37, 100],
+            [-44, 48],
+            [-24, 64],
+            [31, 75],
+            [64, 2],
+            [41, -42],
+            [43, 55],
+            [-10, 51],
+            [71, 22],
+            [2, 45],
+            [-27, 38],
+            [28, 35],
+            [33, 123]
+        ],
+        [
+            [1330, 4776],
+            [21, -45],
+            [37, -24],
+            [29, -65],
+            [-18, -95]
+        ],
+        [
+            [1399, 4547],
+            [-38, -23],
+            [-106, -35],
+            [-112, 3],
+            [-87, -28]
+        ],
+        [
+            [738, 4392],
+            [-10, 126],
+            [-62, 127],
+            [-6, 86],
+            [-34, 71],
+            [7, 80]
+        ],
+        [
+            [1399, 4547],
+            [46, 27],
+            [61, -29],
+            [62, 2],
+            [38, 23],
+            [95, 3],
+            [102, 36]
+        ],
+        [
+            [1265, 5262],
+            [49, 51],
+            [85, -6],
+            [41, 20],
+            [111, 25],
+            [100, -28],
+            [16, -53],
+            [104, 30],
+            [56, -18],
+            [134, 31],
+            [37, 27]
+        ]
+    ], "transform": { "scale": [0.0011475456636490006, 0.0009190075430615602], "translate": [-9.50169837099986, 36.98053620000019] }, "objects": { "portugal_districts": { "type": "GeometryCollection", "geometries": [{ "arcs": [
+                    [0, 1, 2, 3, 4]
+                ], "type": "Polygon", "properties": { "adm1_code": "PRT-5498", "OBJECTID_1": 6959, "diss_me": 5498, "adm1_cod_1": "PRT-5498", "iso_3166_2": "PT-15", "wikipedia": "http://en.wikipedia.org/wiki/Set%C3%BAbal_District", "iso_a2": "PT", "adm0_sr": 5, "name": "Setúbal", "name_alt": null, "name_local": null, "type": "Distrito", "type_en": "District", "code_local": null, "code_hasc": "PT.SE", "note": null, "hasc_maybe": null, "region": "Lisbon", "region_cod": null, "provnum_ne": 1, "gadm_level": 1, "check_me": 20, "scalerank": 7, "datarank": 6, "abbrev": null, "postal": "SE", "area_sqkm": 0, "sameascity": 7, "labelrank": 7, "featurecla": "Admin-1 scale rank", "name_len": 7, "mapcolor9": 1, "mapcolor13": 4, "fips": "PO19", "fips_alt": null, "woe_id": 2346577, "woe_label": null, "woe_name": null, "latitude": 38.2071, "longitude": -8.57318, "sov_a3": "PRT", "adm0_a3": "PRT", "adm0_label": 2, "admin": "Portugal", "geonunit": "Portugal", "gu_a3": "PRX", "gn_id": 2262961, "gn_name": "Distrito de Setubal", "gns_id": -2176726, "gns_name": "Setubal, Distrito de", "gn_level": 1, "gn_region": null, "gn_a1_code": "PT.19", "region_sub": null, "sub_code": null, "gns_level": 1, "gns_lang": "fra", "gns_adm1": "PO19", "gns_region": null } }, { "arcs": [
+                    [5, 6, 7, 8]
+                ], "type": "Polygon", "properties": { "adm1_code": "PRT-739", "OBJECTID_1": 1329, "diss_me": 739, "adm1_cod_1": "PRT-739", "iso_3166_2": "PT-", "wikipedia": null, "iso_a2": "PT", "adm0_sr": 1, "name": "Aveiro", "name_alt": null, "name_local": null, "type": "Distrito", "type_en": "District", "code_local": null, "code_hasc": "PT.AV", "note": null, "hasc_maybe": null, "region": "Norte, Centro", "region_cod": null, "provnum_ne": 9, "gadm_level": 1, "check_me": 20, "scalerank": 7, "datarank": 6, "abbrev": null, "postal": "AV", "area_sqkm": 0, "sameascity": 7, "labelrank": 7, "featurecla": "Admin-1 scale rank", "name_len": 6, "mapcolor9": 1, "mapcolor13": 4, "fips": "PO02", "fips_alt": null, "woe_id": 2346562, "woe_label": "Aveiro, PT, Portugal", "woe_name": "Aveiro", "latitude": 40.6738, "longitude": -8.4394, "sov_a3": "PRT", "adm0_a3": "PRT", "adm0_label": 2, "admin": "Portugal", "geonunit": "Portugal", "gu_a3": "PRX", "gn_id": 2742610, "gn_name": "Distrito de Aveiro", "gns_id": -2158958, "gns_name": "Aveiro, Distrito de", "gn_level": 1, "gn_region": null, "gn_a1_code": "PT.02", "region_sub": null, "sub_code": null, "gns_level": 1, "gns_lang": "fra", "gns_adm1": "PO02", "gns_region": null } }, { "arcs": [
+                    [9, 10, 11, 12, 13]
+                ], "type": "Polygon", "properties": { "adm1_code": "PRT-740", "OBJECTID_1": 1330, "diss_me": 740, "adm1_cod_1": "PRT-740", "iso_3166_2": "PT-", "wikipedia": null, "iso_a2": "PT", "adm0_sr": 1, "name": "Leiria", "name_alt": null, "name_local": null, "type": "Distrito", "type_en": "District", "code_local": null, "code_hasc": "PT.LE", "note": null, "hasc_maybe": null, "region": "Centro", "region_cod": null, "provnum_ne": 5, "gadm_level": 1, "check_me": 20, "scalerank": 7, "datarank": 6, "abbrev": null, "postal": "LE", "area_sqkm": 0, "sameascity": 7, "labelrank": 7, "featurecla": "Admin-1 scale rank", "name_len": 6, "mapcolor9": 1, "mapcolor13": 4, "fips": "PO13", "fips_alt": null, "woe_id": 2346572, "woe_label": "Leiria, PT, Portugal", "woe_name": "Leiria", "latitude": 39.7583, "longitude": -8.75857, "sov_a3": "PRT", "adm0_a3": "PRT", "adm0_label": 2, "admin": "Portugal", "geonunit": "Portugal", "gu_a3": "PRX", "gn_id": 2267094, "gn_name": "Distrito de Leiria", "gns_id": -2167878, "gns_name": "Leiria, Distrito de", "gn_level": 1, "gn_region": null, "gn_a1_code": "PT.13", "region_sub": null, "sub_code": null, "gns_level": 1, "gns_lang": "fra", "gns_adm1": "PO13", "gns_region": null } }, { "arcs": [
+                    [14, 15]
+                ], "type": "Polygon", "properties": { "adm1_code": "PRT-741", "OBJECTID_1": 1331, "diss_me": 741, "adm1_cod_1": "PRT-741", "iso_3166_2": "PT-", "wikipedia": null, "iso_a2": "PT", "adm0_sr": 1, "name": "Viana do Castelo", "name_alt": "Vianna do Castello", "name_local": null, "type": "Distrito", "type_en": "District", "code_local": null, "code_hasc": "PT.VC", "note": null, "hasc_maybe": null, "region": "Norte", "region_cod": null, "provnum_ne": 18, "gadm_level": 1, "check_me": 20, "scalerank": 7, "datarank": 6, "abbrev": null, "postal": "VC", "area_sqkm": 0, "sameascity": 7, "labelrank": 7, "featurecla": "Admin-1 scale rank", "name_len": 16, "mapcolor9": 1, "mapcolor13": 4, "fips": "PO20", "fips_alt": null, "woe_id": 2346578, "woe_label": "Viana do Castelo, PT, Portugal", "woe_name": "Viana do Castelo", "latitude": 41.9099, "longitude": -8.4986, "sov_a3": "PRT", "adm0_a3": "PRT", "adm0_label": 2, "admin": "Portugal", "geonunit": "Portugal", "gu_a3": "PRX", "gn_id": 2732772, "gn_name": "Distrito de Viana do Castelo", "gns_id": -2179315, "gns_name": "Viana do Castelo, Distrito de", "gn_level": 1, "gn_region": null, "gn_a1_code": "PT.20", "region_sub": null, "sub_code": null, "gns_level": 1, "gns_lang": "fra", "gns_adm1": "PO20", "gns_region": null } }, { "arcs": [
+                    [16, 17, 18, -2, 19]
+                ], "type": "Polygon", "properties": { "adm1_code": "PRT-743", "OBJECTID_1": 1332, "diss_me": 743, "adm1_cod_1": "PRT-743", "iso_3166_2": "PT-", "wikipedia": null, "iso_a2": "PT", "adm0_sr": 1, "name": "Beja", "name_alt": null, "name_local": null, "type": "Distrito", "type_en": "District", "code_local": null, "code_hasc": "PT.BE", "note": null, "hasc_maybe": null, "region": "Alentejo", "region_cod": null, "provnum_ne": 16, "gadm_level": 1, "check_me": 20, "scalerank": 7, "datarank": 6, "abbrev": null, "postal": "BE", "area_sqkm": 0, "sameascity": 7, "labelrank": 7, "featurecla": "Admin-1 scale rank", "name_len": 4, "mapcolor9": 1, "mapcolor13": 4, "fips": "PO03", "fips_alt": null, "woe_id": 2346563, "woe_label": "Beja, PT, Portugal", "woe_name": "Beja", "latitude": 37.8511, "longitude": -7.88716, "sov_a3": "PRT", "adm0_a3": "PRT", "adm0_label": 2, "admin": "Portugal", "geonunit": "Portugal", "gu_a3": "PRX", "gn_id": 2270984, "gn_name": "Distrito de Beja", "gns_id": -2159656, "gns_name": "Beja, Distrito de", "gn_level": 1, "gn_region": null, "gn_a1_code": "PT.03", "region_sub": null, "sub_code": null, "gns_level": 1, "gns_lang": "fra", "gns_adm1": "PO03", "gns_region": null } }, { "arcs": [
+                    [20, -20, -1, 21, 22]
+                ], "type": "Polygon", "properties": { "adm1_code": "PRT-744", "OBJECTID_1": 1333, "diss_me": 744, "adm1_cod_1": "PRT-744", "iso_3166_2": "PT-", "wikipedia": null, "iso_a2": "PT", "adm0_sr": 1, "name": "Évora", "name_alt": null, "name_local": null, "type": "Distrito", "type_en": "District", "code_local": null, "code_hasc": "PT.EV", "note": null, "hasc_maybe": null, "region": "Alentejo", "region_cod": null, "provnum_ne": 14, "gadm_level": 1, "check_me": 20, "scalerank": 7, "datarank": 6, "abbrev": null, "postal": "EV", "area_sqkm": 0, "sameascity": 7, "labelrank": 7, "featurecla": "Admin-1 scale rank", "name_len": 5, "mapcolor9": 1, "mapcolor13": 4, "fips": "PO08", "fips_alt": null, "woe_id": 2346568, "woe_label": "Evora, PT, Portugal", "woe_name": "Évora", "latitude": 38.6036, "longitude": -7.88463, "sov_a3": "PRT", "adm0_a3": "PRT", "adm0_label": 2, "admin": "Portugal", "geonunit": "Portugal", "gu_a3": "PRX", "gn_id": 2268404, "gn_name": "Distrito de Evora", "gns_id": -2164924, "gns_name": "Evora, Distrito de", "gn_level": 1, "gn_region": null, "gn_a1_code": "PT.08", "region_sub": null, "sub_code": null, "gns_level": 1, "gns_lang": "fra", "gns_adm1": "PO08", "gns_region": null } }, { "arcs": [
+                    [-18, 23]
+                ], "type": "Polygon", "properties": { "adm1_code": "PRT-745", "OBJECTID_1": 361, "diss_me": 745, "adm1_cod_1": "PRT-745", "iso_3166_2": "PT-", "wikipedia": null, "iso_a2": "PT", "adm0_sr": 6, "name": "Faro", "name_alt": null, "name_local": null, "type": "Distrito", "type_en": "District", "code_local": null, "code_hasc": "PT.FA", "note": null, "hasc_maybe": null, "region": "Algarve", "region_cod": null, "provnum_ne": 13, "gadm_level": 1, "check_me": 20, "scalerank": 7, "datarank": 6, "abbrev": null, "postal": "FA", "area_sqkm": 0, "sameascity": 7, "labelrank": 7, "featurecla": "Admin-1 scale rank", "name_len": 4, "mapcolor9": 1, "mapcolor13": 4, "fips": "PO09", "fips_alt": null, "woe_id": 2346569, "woe_label": "Faro, PT, Portugal", "woe_name": "Faro", "latitude": 37.1704, "longitude": -7.93895, "sov_a3": "PRT", "adm0_a3": "PRT", "adm0_label": 2, "admin": "Portugal", "geonunit": "Portugal", "gu_a3": "PRX", "gn_id": 2268337, "gn_name": "Distrito de Faro", "gns_id": -2165077, "gns_name": "Faro, Distrito de", "gn_level": 1, "gn_region": null, "gn_a1_code": "PT.09", "region_sub": null, "sub_code": null, "gns_level": 1, "gns_lang": "fra", "gns_adm1": "PO09", "gns_region": null } }, { "arcs": [
+                    [
+                        [-4, 24, 25]
+                    ],
+                    [
+                        [26, 27, -12]
+                    ]
+                ], "type": "MultiPolygon", "properties": { "adm1_code": "PRT-746", "OBJECTID_1": 1325, "diss_me": 746, "adm1_cod_1": "PRT-746", "iso_3166_2": "PT-", "wikipedia": null, "iso_a2": "PT", "adm0_sr": 5, "name": "Lisboa", "name_alt": "Lisbon|Lisbona|Lisbonne|Lissabon", "name_local": null, "type": "Distrito", "type_en": "District", "code_local": null, "code_hasc": "PT.LI", "note": null, "hasc_maybe": null, "region": "Lisbon", "region_cod": null, "provnum_ne": 1, "gadm_level": 1, "check_me": 20, "scalerank": 7, "datarank": 6, "abbrev": null, "postal": "LI", "area_sqkm": 0, "sameascity": 7, "labelrank": 7, "featurecla": "Admin-1 scale rank", "name_len": 6, "mapcolor9": 1, "mapcolor13": 4, "fips": "PO14", "fips_alt": null, "woe_id": 2346573, "woe_label": "Lisbon, PT, Portugal", "woe_name": "Lisboa", "latitude": 38.9835, "longitude": -9.13397, "sov_a3": "PRT", "adm0_a3": "PRT", "adm0_label": 2, "admin": "Portugal", "geonunit": "Portugal", "gu_a3": "PRX", "gn_id": 2267056, "gn_name": "Distrito de Lisboa", "gns_id": -2167974, "gns_name": "Lisboa, Distrito de", "gn_level": 1, "gn_region": null, "gn_a1_code": "PT.14", "region_sub": null, "sub_code": null, "gns_level": 1, "gns_lang": "fra", "gns_adm1": "PO14", "gns_region": null } }, { "arcs": [
+                    [28, -23, 29, 30]
+                ], "type": "Polygon", "properties": { "adm1_code": "PRT-747", "OBJECTID_1": 1334, "diss_me": 747, "adm1_cod_1": "PRT-747", "iso_3166_2": "PT-", "wikipedia": null, "iso_a2": "PT", "adm0_sr": 1, "name": "Portalegre", "name_alt": null, "name_local": null, "type": "Distrito", "type_en": "District", "code_local": null, "code_hasc": "PT.PA", "note": null, "hasc_maybe": null, "region": "Alentejo", "region_cod": null, "provnum_ne": 15, "gadm_level": 1, "check_me": 20, "scalerank": 7, "datarank": 6, "abbrev": null, "postal": "PA", "area_sqkm": 0, "sameascity": 7, "labelrank": 7, "featurecla": "Admin-1 scale rank", "name_len": 10, "mapcolor9": 1, "mapcolor13": 4, "fips": "PO16", "fips_alt": null, "woe_id": 2346574, "woe_label": "Portalegre, PT, Portugal", "woe_name": "Portalegre", "latitude": 39.2822, "longitude": -7.65389, "sov_a3": "PRT", "adm0_a3": "PRT", "adm0_label": 2, "admin": "Portugal", "geonunit": "Portugal", "gu_a3": "PRX", "gn_id": 2264507, "gn_name": "Distrito de Portalegre", "gns_id": -2172972, "gns_name": "Portalegre, Distrito de", "gn_level": 1, "gn_region": null, "gn_a1_code": "PT.16", "region_sub": null, "sub_code": null, "gns_level": 1, "gns_lang": "fra", "gns_adm1": "PO16", "gns_region": null } }, { "arcs": [
+                    [31, -30, -22, -5, -26, 32, -27, -11]
+                ], "type": "Polygon", "properties": { "adm1_code": "PRT-748", "OBJECTID_1": 1335, "diss_me": 748, "adm1_cod_1": "PRT-748", "iso_3166_2": "PT-", "wikipedia": null, "iso_a2": "PT", "adm0_sr": 1, "name": "Santarém", "name_alt": null, "name_local": null, "type": "Distrito", "type_en": "District", "code_local": null, "code_hasc": "PT.SA", "note": null, "hasc_maybe": null, "region": "Alentejo", "region_cod": null, "provnum_ne": 6, "gadm_level": 1, "check_me": 20, "scalerank": 7, "datarank": 6, "abbrev": null, "postal": "SA", "area_sqkm": 0, "sameascity": 7, "labelrank": 7, "featurecla": "Admin-1 scale rank", "name_len": 8, "mapcolor9": 1, "mapcolor13": 4, "fips": "PO18", "fips_alt": null, "woe_id": 2346576, "woe_label": "SantarÃ©m, PT, Portugal", "woe_name": "Santarém", "latitude": 39.291, "longitude": -8.40378, "sov_a3": "PRT", "adm0_a3": "PRT", "adm0_label": 2, "admin": "Portugal", "geonunit": "Portugal", "gu_a3": "PRX", "gn_id": 2263478, "gn_name": "Distrito de Santarem", "gns_id": -2175490, "gns_name": "Santarem, Distrito de", "gn_level": 1, "gn_region": null, "gn_a1_code": "PT.18", "region_sub": null, "sub_code": null, "gns_level": 1, "gns_lang": "fra", "gns_adm1": "PO18", "gns_region": null } }, { "arcs": [
+                    [33, 34, -15, 35, 36]
+                ], "type": "Polygon", "properties": { "adm1_code": "PRT-749", "OBJECTID_1": 1336, "diss_me": 749, "adm1_cod_1": "PRT-749", "iso_3166_2": "PT-", "wikipedia": null, "iso_a2": "PT", "adm0_sr": 1, "name": "Braga", "name_alt": null, "name_local": null, "type": "Distrito", "type_en": "District", "code_local": null, "code_hasc": "PT.BR", "note": null, "hasc_maybe": null, "region": "Norte", "region_cod": null, "provnum_ne": 4, "gadm_level": 1, "check_me": 20, "scalerank": 7, "datarank": 6, "abbrev": null, "postal": "BR", "area_sqkm": 0, "sameascity": 7, "labelrank": 7, "featurecla": "Admin-1 scale rank", "name_len": 5, "mapcolor9": 1, "mapcolor13": 4, "fips": "PO04", "fips_alt": null, "woe_id": 2346564, "woe_label": "Braga, PT, Portugal", "woe_name": "Braga", "latitude": 41.5663, "longitude": -8.31863, "sov_a3": "PRT", "adm0_a3": "PRT", "adm0_label": 2, "admin": "Portugal", "geonunit": "Portugal", "gu_a3": "PRX", "gn_id": 2742031, "gn_name": "Distrito de Braga", "gns_id": -2160206, "gns_name": "Braga, Distrito de", "gn_level": 1, "gn_region": null, "gn_a1_code": "PT.04", "region_sub": null, "sub_code": null, "gns_level": 1, "gns_lang": "fra", "gns_adm1": "PO04", "gns_region": null } }, { "arcs": [
+                    [37, 38, 39, 40]
+                ], "type": "Polygon", "properties": { "adm1_code": "PRT-750", "OBJECTID_1": 1337, "diss_me": 750, "adm1_cod_1": "PRT-750", "iso_3166_2": "PT-", "wikipedia": null, "iso_a2": "PT", "adm0_sr": 1, "name": "Bragança", "name_alt": "Braganza", "name_local": null, "type": "Distrito", "type_en": "District", "code_local": null, "code_hasc": "PT.BA", "note": null, "hasc_maybe": null, "region": "Norte", "region_cod": null, "provnum_ne": 11, "gadm_level": 1, "check_me": 20, "scalerank": 7, "datarank": 6, "abbrev": null, "postal": "BA", "area_sqkm": 0, "sameascity": 7, "labelrank": 7, "featurecla": "Admin-1 scale rank", "name_len": 8, "mapcolor9": 1, "mapcolor13": 4, "fips": "PO05", "fips_alt": null, "woe_id": 2346565, "woe_label": "BraganÃ§a, PT, Portugal", "woe_name": "Bragança", "latitude": 41.5188, "longitude": -6.81935, "sov_a3": "PRT", "adm0_a3": "PRT", "adm0_label": 2, "admin": "Portugal", "geonunit": "Portugal", "gu_a3": "PRX", "gn_id": 2742026, "gn_name": "Distrito de Braganca", "gns_id": -2160211, "gns_name": "Braganca, Distrito de", "gn_level": 1, "gn_region": null, "gn_a1_code": "PT.05", "region_sub": null, "sub_code": null, "gns_level": 1, "gns_lang": "fra", "gns_adm1": "PO05", "gns_region": null } }, { "arcs": [
+                    [41, -31, -32, -10, 42, 43]
+                ], "type": "Polygon", "properties": { "adm1_code": "PRT-751", "OBJECTID_1": 1338, "diss_me": 751, "adm1_cod_1": "PRT-751", "iso_3166_2": "PT-", "wikipedia": null, "iso_a2": "PT", "adm0_sr": 1, "name": "Castelo Branco", "name_alt": null, "name_local": null, "type": "Distrito", "type_en": "District", "code_local": null, "code_hasc": "PT.CB", "note": null, "hasc_maybe": null, "region": "Centro", "region_cod": null, "provnum_ne": 10, "gadm_level": 1, "check_me": 20, "scalerank": 7, "datarank": 6, "abbrev": null, "postal": "CB", "area_sqkm": 0, "sameascity": 7, "labelrank": 7, "featurecla": "Admin-1 scale rank", "name_len": 14, "mapcolor9": 1, "mapcolor13": 4, "fips": "PO06", "fips_alt": null, "woe_id": 2346566, "woe_label": "Castelo Branco, PT, Portugal", "woe_name": "Castelo Branco", "latitude": 39.9984, "longitude": -7.58224, "sov_a3": "PRT", "adm0_a3": "PRT", "adm0_label": 2, "admin": "Portugal", "geonunit": "Portugal", "gu_a3": "PRX", "gn_id": 2269513, "gn_name": "Distrito de Castelo Branco", "gns_id": -2162528, "gns_name": "Castelo Branco, Distrito de", "gn_level": 1, "gn_region": null, "gn_a1_code": "PT.06", "region_sub": null, "sub_code": null, "gns_level": 1, "gns_lang": "fra", "gns_adm1": "PO06", "gns_region": null } }, { "arcs": [
+                    [44, 45, -43, -14, 46, -6]
+                ], "type": "Polygon", "properties": { "adm1_code": "PRT-752", "OBJECTID_1": 1339, "diss_me": 752, "adm1_cod_1": "PRT-752", "iso_3166_2": "PT-", "wikipedia": null, "iso_a2": "PT", "adm0_sr": 1, "name": "Coimbra", "name_alt": null, "name_local": null, "type": "Distrito", "type_en": "District", "code_local": null, "code_hasc": "PT.CO", "note": null, "hasc_maybe": null, "region": "Centro", "region_cod": null, "provnum_ne": 7, "gadm_level": 1, "check_me": 20, "scalerank": 7, "datarank": 6, "abbrev": null, "postal": "CO", "area_sqkm": 0, "sameascity": 7, "labelrank": 7, "featurecla": "Admin-1 scale rank", "name_len": 7, "mapcolor9": 1, "mapcolor13": 4, "fips": "PO07", "fips_alt": null, "woe_id": 2346567, "woe_label": "Coimbra, PT, Portugal", "woe_name": "Coimbra", "latitude": 40.1645, "longitude": -8.32193, "sov_a3": "PRT", "adm0_a3": "PRT", "adm0_label": 2, "admin": "Portugal", "geonunit": "Portugal", "gu_a3": "PRX", "gn_id": 2740636, "gn_name": "Distrito de Coimbra", "gns_id": -2163276, "gns_name": "Coimbra, Distrito de", "gn_level": 1, "gn_region": null, "gn_a1_code": "PT.07", "region_sub": null, "sub_code": null, "gns_level": 1, "gns_lang": "fra", "gns_adm1": "PO07", "gns_region": null } }, { "arcs": [
+                    [47, -44, -46, 48, -38]
+                ], "type": "Polygon", "properties": { "adm1_code": "PRT-753", "OBJECTID_1": 1340, "diss_me": 753, "adm1_cod_1": "PRT-753", "iso_3166_2": "PT-", "wikipedia": null, "iso_a2": "PT", "adm0_sr": 1, "name": "Guarda", "name_alt": null, "name_local": null, "type": "Distrito", "type_en": "District", "code_local": null, "code_hasc": "PT.GU", "note": null, "hasc_maybe": null, "region": "Centro", "region_cod": null, "provnum_ne": 12, "gadm_level": 1, "check_me": 20, "scalerank": 7, "datarank": 6, "abbrev": null, "postal": "GU", "area_sqkm": 0, "sameascity": 7, "labelrank": 7, "featurecla": "Admin-1 scale rank", "name_len": 6, "mapcolor9": 1, "mapcolor13": 4, "fips": "PO11", "fips_alt": null, "woe_id": 2346571, "woe_label": "Guarda, PT, Portugal", "woe_name": "Guarda", "latitude": 40.2918, "longitude": -7.31624, "sov_a3": "PRT", "adm0_a3": "PRT", "adm0_label": 2, "admin": "Portugal", "geonunit": "Portugal", "gu_a3": "PRX", "gn_id": 2738782, "gn_name": "Distrito da Guarda", "gns_id": -2166968, "gns_name": "Guarda, Distrito da", "gn_level": 1, "gn_region": null, "gn_a1_code": "PT.11", "region_sub": null, "sub_code": null, "gns_level": 1, "gns_lang": "fra", "gns_adm1": "PO11", "gns_region": null } }, { "arcs": [
+                    [49, 50, -8, 51, -34]
+                ], "type": "Polygon", "properties": { "adm1_code": "PRT-754", "OBJECTID_1": 1341, "diss_me": 754, "adm1_cod_1": "PRT-754", "iso_3166_2": "PT-", "wikipedia": null, "iso_a2": "PT", "adm0_sr": 1, "name": "Porto", "name_alt": "Oporto", "name_local": null, "type": "Distrito", "type_en": "District", "code_local": null, "code_hasc": "PT.PO", "note": null, "hasc_maybe": null, "region": "Norte", "region_cod": null, "provnum_ne": 8, "gadm_level": 1, "check_me": 20, "scalerank": 7, "datarank": 6, "abbrev": null, "postal": "PO", "area_sqkm": 0, "sameascity": 7, "labelrank": 7, "featurecla": "Admin-1 scale rank", "name_len": 5, "mapcolor9": 1, "mapcolor13": 4, "fips": "PO17", "fips_alt": null, "woe_id": 2346575, "woe_label": "Porto, PT, Portugal", "woe_name": "Porto", "latitude": 41.2118, "longitude": -8.33114, "sov_a3": "PRT", "adm0_a3": "PRT", "adm0_label": 2, "admin": "Portugal", "geonunit": "Portugal", "gu_a3": "PRX", "gn_id": 2735941, "gn_name": "Distrito do Porto", "gns_id": -2173091, "gns_name": "Porto, Distrito do", "gn_level": 1, "gn_region": null, "gn_a1_code": "PT.17", "region_sub": null, "sub_code": null, "gns_level": 1, "gns_lang": "fra", "gns_adm1": "PO17", "gns_region": null } }, { "arcs": [
+                    [-49, -45, -9, -51, 52, -39]
+                ], "type": "Polygon", "properties": { "adm1_code": "PRT-755", "OBJECTID_1": 1342, "diss_me": 755, "adm1_cod_1": "PRT-755", "iso_3166_2": "PT-", "wikipedia": null, "iso_a2": "PT", "adm0_sr": 1, "name": "Viseu", "name_alt": "Vizeu", "name_local": null, "type": "Distrito", "type_en": "District", "code_local": null, "code_hasc": "PT.VI", "note": null, "hasc_maybe": null, "region": "Centro", "region_cod": null, "provnum_ne": 17, "gadm_level": 1, "check_me": 20, "scalerank": 7, "datarank": 6, "abbrev": null, "postal": "VI", "area_sqkm": 0, "sameascity": 7, "labelrank": 7, "featurecla": "Admin-1 scale rank", "name_len": 5, "mapcolor9": 1, "mapcolor13": 4, "fips": "PO22", "fips_alt": null, "woe_id": 2346580, "woe_label": "Viseu, PT, Portugal", "woe_name": "Viseu", "latitude": 40.8417, "longitude": -7.82745, "sov_a3": "PRT", "adm0_a3": "PRT", "adm0_label": 2, "admin": "Portugal", "geonunit": "Portugal", "gu_a3": "PRX", "gn_id": 2732264, "gn_name": "Distrito de Viseu", "gns_id": -2179986, "gns_name": "Viseu, Distrito de", "gn_level": 1, "gn_region": null, "gn_a1_code": "PT.22", "region_sub": null, "sub_code": null, "gns_level": 1, "gns_lang": "fra", "gns_adm1": "PO22", "gns_region": null } }, { "arcs": [
+                    [-40, -53, -50, -37, 53]
+                ], "type": "Polygon", "properties": { "adm1_code": "PRT-756", "OBJECTID_1": 1343, "diss_me": 756, "adm1_cod_1": "PRT-756", "iso_3166_2": "PT-", "wikipedia": null, "iso_a2": "PT", "adm0_sr": 1, "name": "Vila Real", "name_alt": "Villa Real", "name_local": null, "type": "Distrito", "type_en": "District", "code_local": null, "code_hasc": "PT.VR", "note": null, "hasc_maybe": null, "region": "Norte", "region_cod": null, "provnum_ne": 19, "gadm_level": 1, "check_me": 20, "scalerank": 7, "datarank": 6, "abbrev": null, "postal": "VR", "area_sqkm": 0, "sameascity": 7, "labelrank": 7, "featurecla": "Admin-1 scale rank", "name_len": 9, "mapcolor9": 1, "mapcolor13": 4, "fips": "PO21", "fips_alt": null, "woe_id": 2346579, "woe_label": "Vila Real, PT, Portugal", "woe_name": "Vila Real", "latitude": 41.5279, "longitude": -7.64533, "sov_a3": "PRT", "adm0_a3": "PRT", "adm0_label": 2, "admin": "Portugal", "geonunit": "Portugal", "gu_a3": "PRX", "gn_id": 2732437, "gn_name": "Distrito de Vila Real", "gns_id": -2179753, "gns_name": "Vila Real, Distrito de", "gn_level": 1, "gn_region": null, "gn_a1_code": "PT.21", "region_sub": null, "sub_code": null, "gns_level": 1, "gns_lang": "fra", "gns_adm1": "PO21", "gns_region": null } }] } } }

@@ -1,0 +1,21 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.district {
+    stroke: #fff;
+    stroke-width: 1;
+    fill: #ccc;
+    cursor: pointer;
+}
+
+.district:hover {
+    fill: #f00;
+    /* Change color on hover */
+}
+
+#chart {
+    margin-top: 20px;
+}
