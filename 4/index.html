@@ -979,7 +979,6 @@
             }
         }
 
-
         // Draw chart for all pinned cities
         function drawChart() {
             // Display the chart container
@@ -1034,9 +1033,8 @@
 
             // Draw lines for pinned cities
             pinnedCities.forEach(city => {
-                const cityData = getCityData(city); // Get data and color
-                const data = cityData.data;
-                const color = cityData.color;
+                const data = getCityData(city);
+                const color = cityColors[city] || "gray"; // Default color if none assigned
 
                 // Line for house prices
                 const lineHouse = d3.line()
@@ -1073,8 +1071,7 @@
 
             let legendIndex = 0;
             pinnedCities.forEach(city => {
-                const cityData = getCityData(city);
-                const color = cityData.color;
+                const color = cityColors[city] || "gray";
 
                 // House prices legend
                 legend.append("rect")
@@ -1113,82 +1110,51 @@
         }
 
 
-
         // Helper function to get data for a city
-        // Define the city-color mapping
-
-
-        // Updated getCityData function
         function getCityData(cityName) {
-            let cityColors = {
-                "Lisboa": "#1f77b4", // Blue
-                "Porto": "#ff7f0e", // Orange
-                "Aveiro": "#2ca02c", // Green
-                "Braga": "#d62728", // Red
-                "Coimbra": "#9467bd", // Purple
-                "Faro": "#8c564b", // Brown
-                "Bragança": "#e377c2", // Pink
-                "VianaDoCastelo": "#7f7f7f", // Grey
-                "Evora": "#bcbd22", // Olive
-                "Setúbal": "#17becf", // Cyan
-            };
-
             switch (cityName) {
                 case "Lisboa":
-                    return {
-                        data: housingDataLisbon,
-                        color: cityColors.Lisboa
-                    };
+                    data = housingDataLisbon;
+                    return data;
+
                 case "Porto":
-                    return {
-                        data: housingDataPorto,
-                        color: cityColors.Porto
-                    };
+                    data = housingDataPorto;
+                    return data;
+
                 case "Aveiro":
-                    return {
-                        data: housingDataAveiro,
-                        color: cityColors.Aveiro
-                    };
+                    data = housingDataAveiro;
+                    return data;
+
                 case "Braga":
-                    return {
-                        data: housingDataBraga,
-                        color: cityColors.Braga
-                    };
+                    data = housingDataBraga;
+                    return data;
+
                 case "Coimbra":
-                    return {
-                        data: housingDataCoimbra,
-                        color: cityColors.Coimbra
-                    };
+                    data = housingDataCoimbra;
+                    return data;
+
                 case "Faro":
-                    return {
-                        data: housingDataFaro,
-                        color: cityColors.Faro
-                    };
+                    data = housingDataFaro;
+                    return data;
+
                 case "Bragança":
-                    return {
-                        data: housingDataBraganca,
-                        color: cityColors.Bragança
-                    };
+                    data = housingDataBraganca;
+                    return data;
+
                 case "VianaDoCastelo":
-                    return {
-                        data: housingDataVianaDoCastelo,
-                        color: cityColors.VianaDoCastelo
-                    };
+                    data = housingDataVianaDoCastelo;
+                    return data;
+
                 case "Evora":
-                    return {
-                        data: housingDataEvora,
-                        color: cityColors.Evora
-                    };
+                    data = housingDataEvora;
+                    return data;
+
                 case "Setúbal":
-                    return {
-                        data: housingDataSetubal,
-                        color: cityColors.Setúbal
-                    };
+                    data = housingDataSetubal;
+                    return data;
+
                 default:
-                    return {
-                        data: [],
-                        color: "gray"
-                    }; // Default if city is not found
+                    return [];
             }
         }
     </script>
