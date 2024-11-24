@@ -53,15 +53,6 @@
 <body>
     <h1 style="text-align: center;">Clickable District Capitals of Mainland Portugal</h1>
 
-    <div style="margin: 10px;">
-        <label for="priceFilter">Maximum Price (2024):</label>
-        <input type="number" id="priceFilter" placeholder="Enter price, e.g., 500000">
-        <button onclick="applyFilter()">Apply Filter</button>
-        <button onclick="removeFilter()">Remove Filter</button>
-    </div>
-
-
-
     <div id="container">
         <div id="map"></div>
         <div id="chart"></div>
@@ -71,11 +62,12 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script>
         // Initialize the map
-        let map; // Declare the map globally to allow reinitialization
-        const districtMarkers = {}; // Store marker references for reloading
+        const map = L.map('map').setView([39.5, -8.0], 6);
 
         // Add OpenStreetMap tiles
-
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
 
         // Define district capitals
         const districtCapitals = {
@@ -616,8 +608,6 @@
 
 
 
-
-
         const housingDataAveiro = [{
             year: 2014,
             housePrice: 150000,
@@ -709,49 +699,276 @@
         }];
 
         // Add markers for district capitals
-        // Keep track of markers
-
-
-        // Initialize markers and store them in an object
-        // Apply filter to hide markers based on maximum house price for 2024
-
-
-        // Initialize or reinitialize the map
-        const pinnedCities = new Set(); // Keep track of pinned cities
-
-        // Initialize or reinitialize the map
-        function initializeMap(filteredDistricts = districtCapitals) {
-            // Clear the map container to reinitialize it
-            if (map) {
-                map.remove(); // Completely remove the existing map
-            }
-
-            map = L.map('map').setView([39.5, -8.0], 6);
-
-            // Add OpenStreetMap tiles
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
+        Object.entries(districtCapitals).forEach(([name, coords]) => {
+            const marker = L.circleMarker(coords, {
+                radius: 8,
+                color: 'blue',
+                fillColor: 'lightblue',
+                fillOpacity: 0.7
             }).addTo(map);
 
-            // Add markers for the filtered districts
-            Object.entries(filteredDistricts).forEach(([name, coords]) => {
-                const marker = L.circleMarker(coords, {
-                    radius: 8,
-                    color: pinnedCities.has(name) ? 'red' : 'blue', // Indicate pinned state
-                    fillColor: pinnedCities.has(name) ? 'lightcoral' : 'lightblue',
-                    fillOpacity: 0.7
-                }).addTo(map);
+            // Attach click event to show chart
+            marker.on('click', () => {
+                drawChart(name);
+            });
+        });
 
-                // Reassign the click event for graph display
-                marker.on('click', () => {
-                    togglePin(name);
-                    drawChart(); // Redraw chart based on current pinned cities
+        // Draw a chart for a specific district
+        function drawChart(cityName, coords) {
+            let data = [];
+            switch (cityName) {
+                case "Lisboa":
+                    data = housingDataLisbon;
+                    break;
+                case "Porto":
+                    data = housingDataPorto;
+                    break;
+                case "Aveiro":
+                    data = housingDataAveiro;
+                    break;
+                case "Braga":
+                    data = housingDataBraga;
+                    break;
+                case "Coimbra":
+                    data = housingDataCoimbra;
+                    break;
+                case "Faro":
+                    data = housingDataFaro;
+                    break;
+                case "Bragança":
+                    data = housingDataBraganca;
+                    break;
+                case "VianaDoCastelo":
+                    data = housingDataVianaDoCastelo;
+                    break;
+                case "Evora":
+                    data = housingDataEvora;
+                    break;
+                case "Setúbal":
+                    data = housingDataSetubal;
+                    break;
+                default:
+                    alert(`No data available for ${cityName}`);
+                    return;
+            }
+
+            // Display the chart container
+            document.getElementById('chart').style.display = 'block';
+
+            // Clear previous chart
+            const chartContainer = d3.select("#chart");
+            chartContainer.selectAll("*").remove();
+
+            // Set dimensions for the chart
+            const width = 500;
+            const height = 400;
+            const margin = {
+                top: 20,
+                right: 120, // Increased right margin to accommodate the legend
+                bottom: 40,
+                left: 60
+            };
+
+            const svg = chartContainer.append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            // Define scales
+            const x = d3.scaleLinear()
+                .domain(d3.extent(data, d => d.year))
+                .range([0, width]);
+
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(data, d => Math.max(d.housePrice, d.apartmentPrice))])
+                .range([height, 0]);
+
+            // Define line generators with smooth curves
+            const lineHouse = d3.line()
+                .x(d => x(d.year))
+                .y(d => y(d.housePrice))
+                .curve(d3.curveCatmullRom.alpha(0.5)); // smooth curve
+
+            const lineApartment = d3.line()
+                .x(d => x(d.year))
+                .y(d => y(d.apartmentPrice))
+                .curve(d3.curveCatmullRom.alpha(0.5)); // smooth curve
+
+            // Add gridlines
+            svg.append("g")
+                .attr("class", "grid")
+                .call(d3.axisLeft(y)
+                    .ticks(5)
+                    .tickSize(-width)
+                    .tickFormat(""))
+                .selectAll(".grid line")
+                .style("stroke", "#ddd")
+                .style("stroke-dasharray", "2,2");
+
+            svg.append("g")
+                .attr("class", "grid")
+                .attr("transform", `translate(0,${height})`)
+                .call(d3.axisBottom(x)
+                    .ticks(6)
+                    .tickSize(-height)
+                    .tickFormat(""))
+                .selectAll(".grid line")
+                .style("stroke", "#ddd")
+                .style("stroke-dasharray", "2,2");
+
+            // Add axes with labels
+            svg.append("g")
+                .attr("transform", `translate(0,${height})`)
+                .call(d3.axisBottom(x).tickFormat(d3.format("d")));
+
+            svg.append("g")
+                .call(d3.axisLeft(y));
+
+            // Add house price line
+            svg.append("path")
+                .datum(data)
+                .attr("class", "line line-house")
+                .attr("d", lineHouse)
+                .style("stroke", "steelblue")
+                .style("stroke-width", 2)
+                .style("fill", "none")
+                .style("stroke-linejoin", "round")
+                .style("stroke-linecap", "round");
+
+            // Add apartment price line
+            svg.append("path")
+                .datum(data)
+                .attr("class", "line line-apartment")
+                .attr("d", lineApartment)
+                .style("stroke", "orange")
+                .style("stroke-width", 2)
+                .style("fill", "none")
+                .style("stroke-linejoin", "round")
+                .style("stroke-linecap", "round");
+
+            // Add house price dots with hover effect
+            svg.selectAll(".dot-house")
+                .data(data)
+                .enter().append("circle")
+                .attr("class", "dot-house")
+                .attr("cx", d => x(d.year))
+                .attr("cy", d => y(d.housePrice))
+                .attr("r", 6)
+                .style("fill", "steelblue")
+                .style("opacity", 0.6)
+                .on("mouseover", function(event, d) {
+                    d3.select(this).style("opacity", 1);
+                    svg.append("text")
+                        .attr("class", "tooltip")
+                        .attr("x", x(d.year) + 10)
+                        .attr("y", y(d.housePrice) - 10)
+                        .text(`€${d.housePrice}`);
+                })
+                .on("mouseout", function() {
+                    d3.select(this).style("opacity", 0.6);
+                    d3.selectAll(".tooltip").remove();
                 });
 
-                // Store marker reference
-                districtMarkers[name] = marker;
-            });
+            // Add apartment price dots with hover effect
+            svg.selectAll(".dot-apartment")
+                .data(data)
+                .enter().append("circle")
+                .attr("class", "dot-apartment")
+                .attr("cx", d => x(d.year))
+                .attr("cy", d => y(d.apartmentPrice))
+                .attr("r", 6)
+                .style("fill", "orange")
+                .style("opacity", 0.6)
+                .on("mouseover", function(event, d) {
+                    d3.select(this).style("opacity", 1);
+                    svg.append("text")
+                        .attr("class", "tooltip")
+                        .attr("x", x(d.year) + 10)
+                        .attr("y", y(d.apartmentPrice) - 10)
+                        .text(`€${d.apartmentPrice}`);
+                })
+                .on("mouseout", function() {
+                    d3.select(this).style("opacity", 0.6);
+                    d3.selectAll(".tooltip").remove();
+                });
+
+            // Add labels for the lines
+            svg.append("text")
+                .attr("x", width - 20)
+                .attr("y", margin.top)
+                .attr("fill", "steelblue")
+                .text("House Prices")
+                .style("font-size", "14px")
+                .style("font-weight", "bold");
+
+            svg.append("text")
+                .attr("x", width - 20)
+                .attr("y", margin.top + 20)
+                .attr("fill", "orange")
+                .text("Apartment Prices")
+                .style("font-size", "14px")
+                .style("font-weight", "bold");
+
+            // Create a legend next to the chart (right side)
+            const legend = chartContainer.append("g")
+                .attr("transform", `translate(${width + margin.left + 20}, ${margin.top})`);
+
+            legend.append("circle")
+                .attr("cx", 0)
+                .attr("cy", 0)
+                .attr("r", 6)
+                .style("fill", "steelblue");
+
+            legend.append("text")
+                .attr("x", 20)
+                .attr("y", 0)
+                .attr("dy", ".35em")
+                .style("font-size", "14px")
+                .style("font-weight", "bold")
+                .text("House Prices");
+
+            legend.append("circle")
+                .attr("cx", 0)
+                .attr("cy", 20)
+                .attr("r", 6)
+                .style("fill", "orange");
+
+            legend.append("text")
+                .attr("x", 20)
+                .attr("y", 20)
+                .attr("dy", ".35em")
+                .style("font-size", "14px")
+                .style("font-weight", "bold")
+                .text("Apartment Prices");
         }
+
+        // Keep track of pinned cities
+        const pinnedCities = new Set();
+
+        // Colors for pinned graphs
+        const cityColors = {
+            Lisboa: "red",
+            Porto: "green",
+            Aveiro: "blue"
+                // Add more city-specific colors here if needed
+        };
+
+        // Add markers for district capitals
+        Object.entries(districtCapitals).forEach(([name, coords]) => {
+            const marker = L.circleMarker(coords, {
+                radius: 8,
+                color: 'blue',
+                fillColor: 'lightblue',
+                fillOpacity: 0.7
+            }).addTo(map);
+
+            // Attach click event for pinning
+            marker.on('click', () => {
+                togglePin(name);
+                drawChart();
+            });
+        });
 
         // Toggle pinning of a city
         function togglePin(cityName) {
@@ -760,40 +977,9 @@
             } else {
                 pinnedCities.add(cityName); // Pin if not already pinned
             }
-            initializeMap(districtCapitals); // Reinitialize map to reflect pinning visually
         }
 
-        // Apply filter to reload the map with markers below the price
-        function applyFilter() {
-            const maxPrice = parseFloat(document.getElementById('priceFilter').value);
 
-            if (isNaN(maxPrice)) {
-                alert('Please enter a valid number for the price filter.');
-                return;
-            }
-
-            // Filter districts based on the max price for 2024
-            const filteredDistricts = {};
-            Object.entries(districtCapitals).forEach(([district, coords]) => {
-                const cityData = getCityData(district);
-                const data2024 = cityData.data.find(d => d.year === 2024);
-
-                if (data2024 && data2024.housePrice <= maxPrice) {
-                    filteredDistricts[district] = coords;
-                }
-            });
-
-            // Reinitialize the map with the filtered districts
-            initializeMap(filteredDistricts);
-        }
-
-        // Remove all filters and reload the map with all markers
-        function removeFilter() {
-            initializeMap(districtCapitals);
-        }
-
-        // Initial map setup
-        initializeMap();
         // Draw chart for all pinned cities
         function drawChart() {
             // Display the chart container
@@ -925,8 +1111,6 @@
                 legendIndex++;
             });
         }
-
-
 
 
 
