@@ -7,128 +7,51 @@
     <title>Clickable Map of Portugal District Capitals</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        /* General page styling */
-        
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
-        
-        h1 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-top: 20px;
-            color: #333;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-        /* Container for map and chart */
-        
-        #container {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px;
-            height: 80vh;
-        }
-        /* Map styling */
-        
         #map {
             height: 100%;
-            width: 48%;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 50%;
         }
-        /* Chart styling */
         
         #chart {
             height: 100%;
-            width: 48%;
+            width: 50%;
             padding: 20px;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            display: none;
             overflow-y: auto;
-        }
-        /* Styling for the filter and buttons */
-        
-        .filter-container {
-            text-align: center;
-            margin: 20px 0;
+            display: none;
+            background-color: #f9f9f9;
+            border-left: 2px solid #ccc;
         }
         
-        label {
-            font-size: 1rem;
-            margin-right: 10px;
-            color: #555;
-        }
-        
-        #priceFilter {
-            padding: 10px;
-            font-size: 1rem;
-            border: 2px solid #ccc;
-            border-radius: 5px;
-            width: 200px;
-            margin-right: 10px;
-        }
-        
-        button {
-            padding: 10px 20px;
-            font-size: 1rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #007bff;
-            color: white;
-            transition: background-color 0.3s;
-            margin-left: 10px;
-        }
-        
-        button:hover {
-            background-color: #0056b3;
-        }
-        
-        button:active {
-            background-color: #003f7f;
-        }
-        /* Tooltip styling */
-        
-        .tooltip {
-            position: absolute;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-        /* Improve the legend appearance */
-        
-        .legend {
-            font-size: 14px;
-            margin-top: 10px;
-            margin-left: 20px;
-        }
-        
-        .legend rect {
-            width: 12px;
-            height: 12px;
-            margin-right: 5px;
-        }
-        
-        .legend div {
+        #container {
             display: flex;
-            align-items: center;
-            margin-bottom: 8px;
+            height: 100vh;
+        }
+        
+        .line {
+            fill: none;
+            stroke-width: 2;
+        }
+        
+        .line-house {
+            stroke: steelblue;
+        }
+        
+        .line-apartment {
+            stroke: orange;
+        }
+        
+        .dot {
+            fill: steelblue;
+        }
+        
+        .dot-apartment {
+            fill: orange;
         }
     </style>
 </head>
 
 <body>
-    <h1 style="text-align: center;">Real State Helper</h1>
+    <h1 style="text-align: center;">Clickable District Capitals of Mainland Portugal</h1>
 
     <div style="margin: 10px;">
         <label for="priceFilter">Maximum Price (2024):</label>
@@ -1660,7 +1583,7 @@
                         data: housingDataBraganca,
                         color: cityColors.Bragança
                     };
-                case "Viana do Castelo":
+                case "VianaDoCastelo":
                     return {
                         data: housingDataVianaDoCastelo,
                         color: cityColors.VianaDoCastelo
