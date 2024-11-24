@@ -1114,49 +1114,6 @@
             foodCost: 2.20
         }];
 
-        let housingDataPortugal = []; // Declare a global variable to store aggregated data
-
-        document.addEventListener("DOMContentLoaded", () => {
-            // Aggregate data across all districts
-            const allHousingData = [
-                housingDataLisbon, housingDataPorto, housingDataGuarda,
-                housingDataViseu, housingDataLeiria, housingDataPortalegre,
-                housingDataCasteloBranco, housingDataBeja, housingDataBraga,
-                housingDataCoimbra, housingDataFaro, housingDataBraganca,
-                housingDataVianaDoCastelo, housingDataEvora, housingDataSetubal,
-                housingDataSantarem, housingDataAveiro
-            ];
-
-            // Calculate average data for Portugal and update global variable
-            housingDataPortugal = [];
-            for (let year = 2014; year <= 2024; year++) {
-                let totalHousePrice = 0;
-                let totalApartmentPrice = 0;
-                let count = 0;
-
-                allHousingData.forEach(districtData => {
-                    const dataForYear = districtData.find(d => d.year === year);
-                    if (dataForYear) {
-                        totalHousePrice += dataForYear.housePrice;
-                        totalApartmentPrice += dataForYear.apartmentPrice;
-                        count++;
-                    }
-                });
-
-                if (count > 0) {
-                    housingDataPortugal.push({
-                        year: year,
-                        housePrice: totalHousePrice / count,
-                        apartmentPrice: totalApartmentPrice / count
-                    });
-                }
-            }
-
-            // Always use the global variable to render the chart
-            drawChart();
-        });
-        //-----------------------------------------------------------------------------------------------------
-
         // Add markers for district capitals
         // Keep track of markers
 
@@ -1246,57 +1203,16 @@
         function togglePin(cityName) {
             if (pinnedCities.has(cityName)) {
                 pinnedCities.delete(cityName); // Unpin if already pinned
-                // Change marker color back to blue
-                districtMarkers[cityName].setStyle({
-                    fillColor: 'lightblue',
-                    color: 'blue'
-                });
             } else {
                 pinnedCities.add(cityName); // Pin if not already pinned
-                // Change marker color to red when pinned
-                districtMarkers[cityName].setStyle({
-                    fillColor: 'lightcoral',
-                    color: 'red'
-                });
             }
-            drawChart(); // Update the chart with pinned cities data
         }
 
-        function initializeMap(filteredDistricts = districtCapitals) {
-            // Clear the map container to reinitialize it
-            if (map) {
-                map.remove(); // Completely remove the existing map
-            }
-
-            map = L.map('map').setView([39.5, -8.0], 6);
-
-            // Add OpenStreetMap tiles
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-            }).addTo(map);
-
-            // Add markers for the filtered districts
-            Object.entries(filteredDistricts).forEach(([name, coords]) => {
-                const marker = L.circleMarker(coords, {
-                    radius: 8,
-                    color: pinnedCities.has(name) ? 'red' : 'blue', // Set marker color based on pin state
-                    fillColor: pinnedCities.has(name) ? 'lightcoral' : 'lightblue',
-                    fillOpacity: 0.7
-                }).addTo(map);
-
-                // Assign click event for graph display
-                marker.on('click', () => {
-                    togglePin(name); // Toggle pin state and update color
-                });
-
-                // Store marker reference
-                districtMarkers[name] = marker;
-            });
-        }
         // Initial map setup
         initializeMap();
         // Draw chart for all pinned cities
         function drawChart() {
+            // Display the chart container
             document.getElementById('chart').style.display = 'block';
 
             // Clear previous chart
@@ -1304,13 +1220,13 @@
             chartContainer.selectAll("*").remove();
 
             // Set dimensions for the chart
-            const width = 600;
+            const width = 500;
             const height = 400;
             const margin = {
-                top: 30,
-                right: 180,
-                bottom: 50,
-                left: 70
+                top: 20,
+                right: 150, // Increased for legend space
+                bottom: 40,
+                left: 60
             };
 
             const svg = chartContainer.append("svg")
@@ -1321,191 +1237,111 @@
 
             // Define scales
             const x = d3.scaleLinear()
-                .domain([2014, 2024])
+                .domain([2014, 2024]) // Example year range
                 .range([0, width]);
 
             const y = d3.scaleLinear()
-                .domain([0, 1200000]) // Adjust based on your maximum price
+                .domain([0, 1200000]) // Example price range
                 .range([height, 0]);
 
             // Add gridlines
-            const gridlinesX = d3.axisBottom(x).tickSize(-height).tickFormat("");
             svg.append("g")
-                .attr("class", "grid")
-                .attr("transform", `translate(0,${height})`)
-                .call(gridlinesX)
+                .call(d3.axisLeft(y).ticks(5).tickSize(-width).tickFormat(""))
                 .selectAll("line")
-                .style("stroke", "#e0e0e0")
-                .style("stroke-dasharray", "3,3");
+                .style("stroke", "#ddd")
+                .style("stroke-dasharray", "2,2");
 
-            const gridlinesY = d3.axisLeft(y).tickSize(-width).tickFormat("");
             svg.append("g")
-                .attr("class", "grid")
-                .call(gridlinesY)
+                .attr("transform", `translate(0,${height})`)
+                .call(d3.axisBottom(x).ticks(6).tickSize(-height).tickFormat(""))
                 .selectAll("line")
-                .style("stroke", "#e0e0e0")
-                .style("stroke-dasharray", "3,3");
+                .style("stroke", "#ddd")
+                .style("stroke-dasharray", "2,2");
 
             // Add axes
-            svg.append("g")
-                .attr("transform", `translate(0,${height})`)
-                .call(d3.axisBottom(x).ticks(6).tickFormat(d3.format("d")))
-                .style("font-size", "12px");
+            svg.append("g").attr("transform", `translate(0,${height})`).call(d3.axisBottom(x).tickFormat(d3.format("d")));
+            svg.append("g").call(d3.axisLeft(y));
 
-            svg.append("g")
-                .call(d3.axisLeft(y).ticks(6))
-                .style("font-size", "12px");
-
-            // Add labels
-            svg.append("text")
-                .attr("x", width / 2)
-                .attr("y", height + margin.bottom - 10)
-                .attr("text-anchor", "middle")
-                .style("font-size", "14px")
-                .style("font-weight", "bold")
-                .text("Year");
-
-            svg.append("text")
-                .attr("x", -(height / 2))
-                .attr("y", -margin.left + 20)
-                .attr("text-anchor", "middle")
-                .style("font-size", "14px")
-                .style("font-weight", "bold")
-                .attr("transform", "rotate(-90)")
-                .text("Price (€)");
-
-            // Draw static lines for house and apartment prices (Portugal average)
-            const lineGenerator = d3.line()
-                .x(d => x(d.year))
-                .curve(d3.curveNatural); // Smooth curves
-
-            // Static line for average house prices
-            svg.append("path")
-                .datum(housingDataPortugal)
-                .attr("class", "line-house")
-                .attr("d", lineGenerator.y(d => y(d.housePrice)))
-                .style("stroke", "steelblue")
-                .style("stroke-width", 2)
-                .style("fill", "none");
-
-            // Static line for average apartment prices
-            svg.append("path")
-                .datum(housingDataPortugal)
-                .attr("class", "line-apartment")
-                .attr("d", lineGenerator.y(d => y(d.apartmentPrice)))
-                .style("stroke", "orange")
-                .style("stroke-width", 2)
-                .style("fill", "none");
-
-            // Dynamic lines for pinned cities
+            // Draw lines for pinned cities
             pinnedCities.forEach(city => {
-                const cityData = getCityData(city);
+                const cityData = getCityData(city); // Get data and color
                 const data = cityData.data;
                 const color = cityData.color;
 
-                // House price line for pinned city
-                svg.append("path")
-                    .datum(data)
-                    .attr("d", lineGenerator.y(d => y(d.housePrice)))
-                    .style("stroke", d3.rgb(color).brighter(1))
-                    .style("stroke-width", 3)
-                    .style("fill", "none")
-                    .style("opacity", 0.9);
+                // Line for house prices
+                const lineHouse = d3.line()
+                    .x(d => x(d.year))
+                    .y(d => y(d.housePrice))
+                    .curve(d3.curveCatmullRom.alpha(0.5));
 
-                // Apartment price line for pinned city
                 svg.append("path")
                     .datum(data)
-                    .attr("d", lineGenerator.y(d => y(d.apartmentPrice)))
-                    .style("stroke", d3.rgb(color).darker(1))
-                    .style("stroke-width", 3)
-                    .style("fill", "none")
-                    .style("opacity", 0.9);
+                    .attr("class", "line")
+                    .attr("d", lineHouse)
+                    .style("stroke", color)
+                    .style("stroke-width", 2)
+                    .style("fill", "none");
+
+                // Line for apartment prices
+                const lineApartment = d3.line()
+                    .x(d => x(d.year))
+                    .y(d => y(d.apartmentPrice))
+                    .curve(d3.curveCatmullRom.alpha(0.5));
+
+                svg.append("path")
+                    .datum(data)
+                    .attr("class", "line")
+                    .attr("d", lineApartment)
+                    .style("stroke", d3.rgb(color).darker())
+                    .style("stroke-width", 2)
+                    .style("fill", "none");
             });
 
-            // Tooltip logic
-            const tooltip = d3.select("body").append("div")
-                .attr("class", "tooltip")
-                .style("position", "absolute")
-                .style("background-color", "#333")
-                .style("color", "#fff")
-                .style("padding", "8px")
-                .style("border-radius", "5px")
-                .style("opacity", 0);
-
-            function showTooltip(event, content) {
-                tooltip.html(content)
-                    .style("left", `${event.pageX + 10}px`)
-                    .style("top", `${event.pageY}px`)
-                    .style("opacity", 1);
-            }
-
-            function hideTooltip() {
-                tooltip.style("opacity", 0);
-            }
-
-            // Legend for both static and dynamic data
+            // Add legend
             const legend = svg.append("g")
-                .attr("transform", `translate(${width + 30}, 20)`);
+                .attr("transform", `translate(${width + 20}, 20)`); // Position legend to the right
 
-            // Static legend for Portugal average data
-            legend.append("rect")
-                .attr("x", 0)
-                .attr("y", 0)
-                .attr("width", 10)
-                .attr("height", 10)
-                .attr("fill", "steelblue");
-            legend.append("text")
-                .attr("x", 20)
-                .attr("y", 10)
-                .text("Portugal Avg - House Price")
-                .style("font-size", "12px");
-
-            legend.append("rect")
-                .attr("x", 0)
-                .attr("y", 20)
-                .attr("width", 10)
-                .attr("height", 10)
-                .attr("fill", "orange");
-            legend.append("text")
-                .attr("x", 20)
-                .attr("y", 30)
-                .text("Portugal Avg - Apartment Price")
-                .style("font-size", "12px");
-
-            // Dynamic legend for pinned cities
-            let legendIndex = 2; // Start from 2 to skip the static entries
+            let legendIndex = 0;
             pinnedCities.forEach(city => {
                 const cityData = getCityData(city);
+                const color = cityData.color;
 
+                // House prices legend
                 legend.append("rect")
                     .attr("x", 0)
-                    .attr("y", legendIndex * 25)
+                    .attr("y", legendIndex * 20)
                     .attr("width", 10)
                     .attr("height", 10)
-                    .attr("fill", d3.rgb(cityData.color).brighter(1));
+                    .style("fill", color);
+
                 legend.append("text")
                     .attr("x", 20)
-                    .attr("y", legendIndex * 25 + 9)
-                    .text(`${city} - House Price`)
-                    .style("font-size", "12px");
+                    .attr("y", legendIndex * 20 + 9)
+                    .text(`${city} - House Prices`)
+                    .style("font-size", "12px")
+                    .style("alignment-baseline", "middle");
 
                 legendIndex++;
 
+                // Apartment prices legend
                 legend.append("rect")
                     .attr("x", 0)
-                    .attr("y", legendIndex * 25)
+                    .attr("y", legendIndex * 20)
                     .attr("width", 10)
                     .attr("height", 10)
-                    .attr("fill", d3.rgb(cityData.color).darker(1));
+                    .style("fill", d3.rgb(color).darker());
+
                 legend.append("text")
                     .attr("x", 20)
-                    .attr("y", legendIndex * 25 + 9)
-                    .text(`${city} - Apartment Price`)
-                    .style("font-size", "12px");
+                    .attr("y", legendIndex * 20 + 9)
+                    .text(`${city} - Apartment Prices`)
+                    .style("font-size", "12px")
+                    .style("alignment-baseline", "middle");
 
                 legendIndex++;
             });
         }
+
 
 
 
@@ -1547,17 +1383,6 @@
                         data: housingDataPorto,
                         color: cityColors.Porto
                     };
-                case "Guarda":
-                    return {
-                        data: housingDataGuarda,
-                        color: cityColors.Aveiro
-                    };
-
-                case "Beja":
-                    return {
-                        data: housingDataBeja,
-                        color: cityColors.Porto
-                    };
                 case "Aveiro":
                     return {
                         data: housingDataAveiro,
@@ -1588,7 +1413,7 @@
                         data: housingDataVianaDoCastelo,
                         color: cityColors.VianaDoCastelo
                     };
-                case "Évora":
+                case "Evora":
                     return {
                         data: housingDataEvora,
                         color: cityColors.Evora

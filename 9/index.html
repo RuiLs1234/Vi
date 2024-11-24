@@ -1246,57 +1246,16 @@
         function togglePin(cityName) {
             if (pinnedCities.has(cityName)) {
                 pinnedCities.delete(cityName); // Unpin if already pinned
-                // Change marker color back to blue
-                districtMarkers[cityName].setStyle({
-                    fillColor: 'lightblue',
-                    color: 'blue'
-                });
             } else {
                 pinnedCities.add(cityName); // Pin if not already pinned
-                // Change marker color to red when pinned
-                districtMarkers[cityName].setStyle({
-                    fillColor: 'lightcoral',
-                    color: 'red'
-                });
             }
-            drawChart(); // Update the chart with pinned cities data
         }
 
-        function initializeMap(filteredDistricts = districtCapitals) {
-            // Clear the map container to reinitialize it
-            if (map) {
-                map.remove(); // Completely remove the existing map
-            }
-
-            map = L.map('map').setView([39.5, -8.0], 6);
-
-            // Add OpenStreetMap tiles
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-            }).addTo(map);
-
-            // Add markers for the filtered districts
-            Object.entries(filteredDistricts).forEach(([name, coords]) => {
-                const marker = L.circleMarker(coords, {
-                    radius: 8,
-                    color: pinnedCities.has(name) ? 'red' : 'blue', // Set marker color based on pin state
-                    fillColor: pinnedCities.has(name) ? 'lightcoral' : 'lightblue',
-                    fillOpacity: 0.7
-                }).addTo(map);
-
-                // Assign click event for graph display
-                marker.on('click', () => {
-                    togglePin(name); // Toggle pin state and update color
-                });
-
-                // Store marker reference
-                districtMarkers[name] = marker;
-            });
-        }
         // Initial map setup
         initializeMap();
         // Draw chart for all pinned cities
         function drawChart() {
+            // Display the chart container
             document.getElementById('chart').style.display = 'block';
 
             // Clear previous chart
