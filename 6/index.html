@@ -720,9 +720,6 @@
         const pinnedCities = new Set(); // Keep track of pinned cities
 
         // Initialize or reinitialize the map
-        let currentFilter = null; // Track the current filter value
-
-        // Initialize or reinitialize the map
         function initializeMap(filteredDistricts = districtCapitals) {
             // Clear the map container to reinitialize it
             if (map) {
@@ -745,52 +742,15 @@
                     fillOpacity: 0.7
                 }).addTo(map);
 
-                // Assign click event for graph display
+                // Reassign the click event for graph display
                 marker.on('click', () => {
                     togglePin(name);
-                    drawChart(); // Update graph based on pinned cities
+                    drawChart(); // Redraw chart based on current pinned cities
                 });
 
                 // Store marker reference
                 districtMarkers[name] = marker;
             });
-        }
-
-        // Apply filter to restrict markers based on house prices
-        function applyFilter() {
-            const maxPrice = parseFloat(document.getElementById('priceFilter').value);
-
-            if (isNaN(maxPrice)) {
-                alert('Please enter a valid number for the price filter.');
-                return;
-            }
-
-            currentFilter = maxPrice; // Update the current filter
-            updateMarkers(); // Reapply the filter to the markers
-        }
-
-        // Remove all filters and reload all markers
-        function removeFilter() {
-            currentFilter = null; // Clear the current filter
-            updateMarkers(); // Reload all markers without filtering
-        }
-
-        // Update markers based on the current filter
-        function updateMarkers() {
-            const filteredDistricts = {};
-
-            // Filter districts based on the current filter
-            Object.entries(districtCapitals).forEach(([district, coords]) => {
-                const cityData = getCityData(district);
-                const data2024 = cityData.data.find(d => d.year === 2024);
-
-                if (!currentFilter || (data2024 && data2024.housePrice <= currentFilter)) {
-                    filteredDistricts[district] = coords; // Include district if it passes the filter
-                }
-            });
-
-            // Reinitialize the map with the filtered districts
-            initializeMap(filteredDistricts);
         }
 
         // Toggle pinning of a city
@@ -800,6 +760,36 @@
             } else {
                 pinnedCities.add(cityName); // Pin if not already pinned
             }
+            initializeMap(districtCapitals); // Reinitialize map to reflect pinning visually
+        }
+
+        // Apply filter to reload the map with markers below the price
+        function applyFilter() {
+            const maxPrice = parseFloat(document.getElementById('priceFilter').value);
+
+            if (isNaN(maxPrice)) {
+                alert('Please enter a valid number for the price filter.');
+                return;
+            }
+
+            // Filter districts based on the max price for 2024
+            const filteredDistricts = {};
+            Object.entries(districtCapitals).forEach(([district, coords]) => {
+                const cityData = getCityData(district);
+                const data2024 = cityData.data.find(d => d.year === 2024);
+
+                if (data2024 && data2024.housePrice <= maxPrice) {
+                    filteredDistricts[district] = coords;
+                }
+            });
+
+            // Reinitialize the map with the filtered districts
+            initializeMap(filteredDistricts);
+        }
+
+        // Remove all filters and reload the map with all markers
+        function removeFilter() {
+            initializeMap(districtCapitals);
         }
 
         // Initial map setup
