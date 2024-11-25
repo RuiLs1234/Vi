@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clickable Map of Portugal District Capitals</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        /* General page styling */
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        /* Header styling */
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-top: 20px;
+            color: white;
+            /* White text for contrast */
+            font-weight: bold;
+            letter-spacing: 1px;
+            padding: 20px;
+            background-color: black;
+            /* Blue background */
+            border-radius: 5px;
+        }
+        /* Container for map and chart */
+        
+        #container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            height: 80vh;
+        }
+        /* Map styling */
+        
+        #map {
+            height: 100%;
+            width: 48%;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        /* Chart styling */
+        
+        #chart {
+            height: 100%;
+            width: 48%;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            overflow-y: auto;
+        }
+        /* Styling for the filter and buttons */
+        
+        .filter-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        label {
+            font-size: 1rem;
+            margin-right: 10px;
+            color: #555;
+        }
+        
+        #priceFilter {
+            padding: 10px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+            margin-right: 10px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.3s;
+            margin-left: 10px;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        button:active {
+            background-color: #003f7f;
+        }
+        /* Tooltip styling */
+        
+        .tooltip {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        /* Improve the legend appearance */
+        
+        .legend {
+            font-size: 14px;
+            margin-top: 10px;
+            margin-left: 20px;
+        }
+        
+        .legend rect {
+            width: 12px;
+            height: 12px;
+            margin-right: 5px;
+        }
+        
+        .legend div {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="text-align: center;">Real Estate Helper - Portugal</h1>
+
+    <div style="margin: 10px;">
+        <label for="priceFilter">Maximum Buget:</label>
+        <input type="number" id="priceFilter" placeholder="Enter price, e.g., 500000">
+        <button onclick="applyFilter()">Apply Filter</button>
+        <button onclick="removeFilter()">Remove Filter</button>
+    </div>
+
+
+
+    <div id="container">
+        <div id="map"></div>
+        <div id="chart"></div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script>
+        // Initialize the map
+        let map; // Declare the map globally to allow reinitialization
+        const districtMarkers = {}; // Store marker references for reloading
+
+        // Add OpenStreetMap tiles
+
+
+        // Define district capitals
+        const districtCapitals = {
+            "Lisboa": [38.7169, -9.1399],
+            "Porto": [41.1496, -8.6109],
+            "Braga": [41.5454, -8.4265],
+            "Coimbra": [40.2033, -8.4103],
+            "Aveiro": [40.6400, -8.6455],
+            "Leiria": [39.7431, -8.8065],
+            "Castelo Branco": [39.4600, -7.4900],
+            "Santarém": [39.2366, -8.6855],
+            "Viseu": [40.6613, -7.9107],
+            "Faro": [37.0169, -7.9300],
+            "Setúbal": [38.5200, -8.8900],
+            "Évora": [38.5724, -7.9078],
+            "Portalegre": [39.2923, -7.4397],
+            "Bragança": [41.8065, -6.7487],
+            "Guarda": [40.5376, -7.2690],
+            "Viana do Castelo": [41.6902, -8.8274],
+            "Beja": [38.0151, -7.8632]
+        };
+
+        // Mock data example (replace or add as needed)
+        const housingDataLisbon = [{
+            year: 2014,
+            housePrice: 670000,
+            apartmentPrice: 500000,
+            rent: 7.8
+        }, {
+            year: 2015,
+            housePrice: 695000,
+            apartmentPrice: 525000,
+            rent: 8.2
+        }, {
+            year: 2016,
+            housePrice: 725000,
+            apartmentPrice: 550000,
+            rent: 8.6
+        }, {
+            year: 2017,
+            housePrice: 770000,
+            apartmentPrice: 580000,
+            rent: 9.0
+        }, {
+            year: 2018,
+            housePrice: 820000,
+            apartmentPrice: 620000,
+            rent: 9.4
+        }, {
+            year: 2019,
+            housePrice: 860000,
+            apartmentPrice: 650000,
+            rent: 10.0
+        }, {
+            year: 2020,
+            housePrice: 910000,
+            apartmentPrice: 675000,
+            rent: 10.5
+        }, {
+            year: 2021,
+            housePrice: 950000,
+            apartmentPrice: 700000,
+            rent: 11.0
+        }, {
+            year: 2022,
+            housePrice: 1000000,
+            apartmentPrice: 730000,
+            rent: 11.5
+        }, {
+            year: 2023,
+            housePrice: 1050000,
+            apartmentPrice: 760000,
+            rent: 12.0
+        }, {
+            year: 2024,
+            housePrice: 1128400,
+            apartmentPrice: 800000,
+            rent: 12.99
+        }, ];
+
+        // Housing data for Porto
+        const housingDataPorto = [{
+            year: 2014,
+            housePrice: 180000,
+            apartmentPrice: 140000,
+            rent: 6.00
+        }, {
+            year: 2015,
+            housePrice: 190000,
+            apartmentPrice: 150000,
+            rent: 6.30
+        }, {
+            year: 2016,
+            housePrice: 210000,
+            apartmentPrice: 160000,
+            rent: 6.60
+        }, {
+            year: 2017,
+            housePrice: 230000,
+            apartmentPrice: 180000,
+            rent: 7.20
+        }, {
+            year: 2018,
+            housePrice: 260000,
+            apartmentPrice: 200000,
+            rent: 8.00
+        }, {
+            year: 2019,
+            housePrice: 290000,
+            apartmentPrice: 220000,
+            rent: 8.60
+        }, {
+            year: 2020,
+            housePrice: 320000,
+            apartmentPrice: 240000,
+            rent: 9.00
+        }, {
+            year: 2021,
+            housePrice: 350000,
+            apartmentPrice: 270000,
+            rent: 9.40
+        }, {
+            year: 2022,
+            housePrice: 380000,
+            apartmentPrice: 300000,
+            rent: 9.70
+        }, {
+            year: 2023,
+            housePrice: 400000,
+            apartmentPrice: 330000,
+            rent: 10.00
+        }, {
+            year: 2024,
+            housePrice: 430000,
+            apartmentPrice: 350000,
+            rent: 10.50
+        }, ];
+
+        const housingDataGuarda = [{
+            year: 2014,
+            housePrice: 70000,
+            apartmentPrice: 50000,
+            rent: 3.5
+        }, {
+            year: 2015,
+            housePrice: 75000,
+            apartmentPrice: 55000,
+            rent: 3.7
+        }, {
+            year: 2016,
+            housePrice: 80000,
+            apartmentPrice: 60000,
+            rent: 4.0
+        }, {
+            year: 2017,
+            housePrice: 85000,
+            apartmentPrice: 65000,
+            rent: 4.2
+        }, {
+            year: 2018,
+            housePrice: 90000,
+            apartmentPrice: 70000,
+            rent: 4.4
+        }, {
+            year: 2019,
+            housePrice: 95000,
+            apartmentPrice: 75000,
+            rent: 4.6
+        }, {
+            year: 2020,
+            housePrice: 105000,
+            apartmentPrice: 85000,
+            rent: 4.9
+        }, {
+            year: 2021,
+            housePrice: 120000,
+            apartmentPrice: 95000,
+            rent: 5.1
+        }, {
+            year: 2022,
+            housePrice: 130000,
+            apartmentPrice: 100000,
+            rent: 5.3
+        }, {
+            year: 2023,
+            housePrice: 140000,
+            apartmentPrice: 110000,
+            rent: 5.6
+        }, {
+            year: 2024,
+            housePrice: 150000,
+            apartmentPrice: 120000,
+            rent: 5.8
+        }, ];
+
+        const housingDataViseu = [{
+            year: 2014,
+            housePrice: 110000,
+            apartmentPrice: 90000,
+            rent: 4.8
+        }, {
+            year: 2015,
+            housePrice: 115000,
+            apartmentPrice: 95000,
+            rent: 5.0
+        }, {
+            year: 2016,
+            housePrice: 120000,
+            apartmentPrice: 100000,
+            rent: 5.2
+        }, {
+            year: 2017,
+            housePrice: 130000,
+            apartmentPrice: 110000,
+            rent: 5.5
+        }, {
+            year: 2018,
+            housePrice: 140000,
+            apartmentPrice: 120000,
+            rent: 5.8
+        }, {
+            year: 2019,
+            housePrice: 150000,
+            apartmentPrice: 130000,
+            rent: 6.2
+        }, {
+            year: 2020,
+            housePrice: 160000,
+            apartmentPrice: 140000,
+            rent: 6.5
+        }, {
+            year: 2021,
+            housePrice: 180000,
+            apartmentPrice: 160000,
+            rent: 6.8
+        }, {
+            year: 2022,
+            housePrice: 200000,
+            apartmentPrice: 180000,
+            rent: 7.0
+        }, {
+            year: 2023,
+            housePrice: 230000,
+            apartmentPrice: 200000,
+            rent: 7.3
+        }, {
+            year: 2024,
+            housePrice: 250000,
+            apartmentPrice: 220000,
+            rent: 7.5
+        }, ];
+
+        const housingDataLeiria = [{
+            year: 2014,
+            housePrice: 140000,
+            apartmentPrice: 110000,
+            rent: 6.0
+        }, {
+            year: 2015,
+            housePrice: 145000,
+            apartmentPrice: 115000,
+            rent: 6.3
+        }, {
+            year: 2016,
+            housePrice: 150000,
+            apartmentPrice: 120000,
+            rent: 6.5
+        }, {
+            year: 2017,
+            housePrice: 160000,
+            apartmentPrice: 130000,
+            rent: 6.8
+        }, {
+            year: 2018,
+            housePrice: 170000,
+            apartmentPrice: 140000,
+            rent: 7.0
+        }, {
+            year: 2019,
+            housePrice: 180000,
+            apartmentPrice: 150000,
+            rent: 7.3
+        }, {
+            year: 2020,
+            housePrice: 200000,
+            apartmentPrice: 170000,
+            rent: 7.6
+        }, {
+            year: 2021,
+            housePrice: 220000,
+            apartmentPrice: 190000,
+            rent: 7.9
+        }, {
+            year: 2022,
+            housePrice: 240000,
+            apartmentPrice: 210000,
+            rent: 8.2
+        }, {
+            year: 2023,
+            housePrice: 260000,
+            apartmentPrice: 230000,
+            rent: 8.5
+        }, {
+            year: 2024,
+            housePrice: 280000,
+            apartmentPrice: 250000,
+            rent: 8.8
+        }, ];
+
+
+        const housingDataPortalegre = [{
+            year: 2014,
+            housePrice: 60000,
+            apartmentPrice: 50000,
+            rent: 3.2
+        }, {
+            year: 2015,
+            housePrice: 62000,
+            apartmentPrice: 52000,
+            rent: 3.4
+        }, {
+            year: 2016,
+            housePrice: 65000,
+            apartmentPrice: 55000,
+            rent: 3.6
+        }, {
+            year: 2017,
+            housePrice: 70000,
+            apartmentPrice: 60000,
+            rent: 3.8
+        }, {
+            year: 2018,
+            housePrice: 75000,
+            apartmentPrice: 65000,
+            rent: 4.0
+        }, {
+            year: 2019,
+            housePrice: 80000,
+            apartmentPrice: 70000,
+            rent: 4.2
+        }, {
+            year: 2020,
+            housePrice: 90000,
+            apartmentPrice: 80000,
+            rent: 4.5
+        }, {
+            year: 2021,
+            housePrice: 100000,
+            apartmentPrice: 90000,
+            rent: 4.7
+        }, {
+            year: 2022,
+            housePrice: 110000,
+            apartmentPrice: 100000,
+            rent: 5.0
+        }, {
+            year: 2023,
+            housePrice: 125000,
+            apartmentPrice: 110000,
+            rent: 5.3
+        }, {
+            year: 2024,
+            housePrice: 140000,
+            apartmentPrice: 120000,
+            rent: 5.5
+        }, ];
+
+
+        const housingDataCasteloBranco = [{
+            year: 2014,
+            housePrice: 90000,
+            apartmentPrice: 70000,
+            rent: 4.2
+        }, {
+            year: 2015,
+            housePrice: 95000,
+            apartmentPrice: 75000,
+            rent: 4.4
+        }, {
+            year: 2016,
+            housePrice: 100000,
+            apartmentPrice: 80000,
+            rent: 4.6
+        }, {
+            year: 2017,
+            housePrice: 110000,
+            apartmentPrice: 90000,
+            rent: 4.8
+        }, {
+            year: 2018,
+            housePrice: 120000,
+            apartmentPrice: 100000,
+            rent: 5.0
+        }, {
+            year: 2019,
+            housePrice: 130000,
+            apartmentPrice: 110000,
+            rent: 5.2
+        }, {
+            year: 2020,
+            housePrice: 140000,
+            apartmentPrice: 120000,
+            rent: 5.4
+        }, {
+            year: 2021,
+            housePrice: 160000,
+            apartmentPrice: 140000,
+            rent: 5.7
+        }, {
+            year: 2022,
+            housePrice: 180000,
+            apartmentPrice: 160000,
+            rent: 6.0
+        }, {
+            year: 2023,
+            housePrice: 200000,
+            apartmentPrice: 180000,
+            rent: 6.3
+        }, {
+            year: 2024,
+            housePrice: 220000,
+            apartmentPrice: 200000,
+            rent: 6.5
+        }, ];
+
+
+        const housingDataBeja = [{
+            year: 2014,
+            housePrice: 90000,
+            apartmentPrice: 75000,
+            rent: 4.0
+        }, {
+            year: 2015,
+            housePrice: 95000,
+            apartmentPrice: 80000,
+            rent: 4.2
+        }, {
+            year: 2016,
+            housePrice: 100000,
+            apartmentPrice: 85000,
+            rent: 4.4
+        }, {
+            year: 2017,
+            housePrice: 110000,
+            apartmentPrice: 90000,
+            rent: 4.6
+        }, {
+            year: 2018,
+            housePrice: 120000,
+            apartmentPrice: 100000,
+            rent: 4.8
+        }, {
+            year: 2019,
+            housePrice: 130000,
+            apartmentPrice: 110000,
+            rent: 5.0
+        }, {
+            year: 2020,
+            housePrice: 150000,
+            apartmentPrice: 130000,
+            rent: 5.3
+        }, {
+            year: 2021,
+            housePrice: 160000,
+            apartmentPrice: 140000,
+            rent: 5.5
+        }, {
+            year: 2022,
+            housePrice: 180000,
+            apartmentPrice: 160000,
+            rent: 5.7
+        }, {
+            year: 2023,
+            housePrice: 200000,
+            apartmentPrice: 180000,
+            rent: 6.0
+        }, {
+            year: 2024,
+            housePrice: 220000,
+            apartmentPrice: 200000,
+            rent: 6.2
+        }, ];
+
+
+
+
+
+        const housingDataBraga = [{
+            year: 2014,
+            housePrice: 140000,
+            apartmentPrice: 100000,
+            rent: 4.20
+        }, {
+            year: 2015,
+            housePrice: 150000,
+            apartmentPrice: 110000,
+            rent: 4.50
+        }, {
+            year: 2016,
+            housePrice: 160000,
+            apartmentPrice: 120000,
+            rent: 4.80
+        }, {
+            year: 2017,
+            housePrice: 170000,
+            apartmentPrice: 130000,
+            rent: 5.10
+        }, {
+            year: 2018,
+            housePrice: 190000,
+            apartmentPrice: 140000,
+            rent: 5.40
+        }, {
+            year: 2019,
+            housePrice: 210000,
+            apartmentPrice: 160000,
+            rent: 5.80
+        }, {
+            year: 2020,
+            housePrice: 230000,
+            apartmentPrice: 180000,
+            rent: 6.10
+        }, {
+            year: 2021,
+            housePrice: 250000,
+            apartmentPrice: 200000,
+            rent: 6.40
+        }, {
+            year: 2022,
+            housePrice: 280000,
+            apartmentPrice: 220000,
+            rent: 6.70
+        }, {
+            year: 2023,
+            housePrice: 310000,
+            apartmentPrice: 240000,
+            rent: 7.00
+        }, {
+            year: 2024,
+            housePrice: 358800,
+            apartmentPrice: 270000,
+            rent: 6.00
+        }];
+
+        const housingDataCoimbra = [{
+            year: 2014,
+            housePrice: 130000,
+            apartmentPrice: 90000,
+            rent: 4.00
+        }, {
+            year: 2015,
+            housePrice: 140000,
+            apartmentPrice: 100000,
+            rent: 4.20
+        }, {
+            year: 2016,
+            housePrice: 150000,
+            apartmentPrice: 110000,
+            rent: 4.40
+        }, {
+            year: 2017,
+            housePrice: 160000,
+            apartmentPrice: 120000,
+            rent: 4.60
+        }, {
+            year: 2018,
+            housePrice: 180000,
+            apartmentPrice: 130000,
+            rent: 4.80
+        }, {
+            year: 2019,
+            housePrice: 200000,
+            apartmentPrice: 150000,
+            rent: 5.20
+        }, {
+            year: 2020,
+            housePrice: 220000,
+            apartmentPrice: 170000,
+            rent: 5.60
+        }, {
+            year: 2021,
+            housePrice: 240000,
+            apartmentPrice: 190000,
+            rent: 5.80
+        }, {
+            year: 2022,
+            housePrice: 260000,
+            apartmentPrice: 210000,
+            rent: 6.00
+        }, {
+            year: 2023,
+            housePrice: 290000,
+            apartmentPrice: 230000,
+            rent: 6.50
+        }, {
+            year: 2024,
+            housePrice: 372800,
+            apartmentPrice: 320000,
+            rent: 6.50
+        }];
+
+        const housingDataFaro = [{
+            year: 2014,
+            housePrice: 250000,
+            apartmentPrice: 180000,
+            rent: 7.50
+        }, {
+            year: 2015,
+            housePrice: 260000,
+            apartmentPrice: 190000,
+            rent: 7.70
+        }, {
+            year: 2016,
+            housePrice: 280000,
+            apartmentPrice: 210000,
+            rent: 8.00
+        }, {
+            year: 2017,
+            housePrice: 300000,
+            apartmentPrice: 230000,
+            rent: 8.20
+        }, {
+            year: 2018,
+            housePrice: 330000,
+            apartmentPrice: 250000,
+            rent: 8.50
+        }, {
+            year: 2019,
+            housePrice: 360000,
+            apartmentPrice: 270000,
+            rent: 8.80
+        }, {
+            year: 2020,
+            housePrice: 390000,
+            apartmentPrice: 300000,
+            rent: 9.00
+        }, {
+            year: 2021,
+            housePrice: 420000,
+            apartmentPrice: 330000,
+            rent: 9.20
+        }, {
+            year: 2022,
+            housePrice: 450000,
+            apartmentPrice: 360000,
+            rent: 9.40
+        }, {
+            year: 2023,
+            housePrice: 480000,
+            apartmentPrice: 390000,
+            rent: 9.60
+        }, {
+            year: 2024,
+            housePrice: 595800,
+            apartmentPrice: 450000,
+            rent: 9.52
+        }];
+        const housingDataBraganca = [{
+            year: 2014,
+            housePrice: 80000,
+            apartmentPrice: 60000,
+            rent: 3.50
+        }, {
+            year: 2015,
+            housePrice: 85000,
+            apartmentPrice: 65000,
+            rent: 3.60
+        }, {
+            year: 2016,
+            housePrice: 90000,
+            apartmentPrice: 70000,
+            rent: 3.70
+        }, {
+            year: 2017,
+            housePrice: 95000,
+            apartmentPrice: 75000,
+            rent: 3.80
+        }, {
+            year: 2018,
+            housePrice: 100000,
+            apartmentPrice: 80000,
+            rent: 3.90
+        }, {
+            year: 2019,
+            housePrice: 110000,
+            apartmentPrice: 85000,
+            rent: 4.00
+        }, {
+            year: 2020,
+            housePrice: 120000,
+            apartmentPrice: 90000,
+            rent: 4.10
+        }, {
+            year: 2021,
+            housePrice: 130000,
+            apartmentPrice: 95000,
+            rent: 4.20
+        }, {
+            year: 2022,
+            housePrice: 140000,
+            apartmentPrice: 100000,
+            rent: 4.30
+        }, {
+            year: 2023,
+            housePrice: 150000,
+            apartmentPrice: 110000,
+            rent: 4.40
+        }, {
+            year: 2024,
+            housePrice: 250000,
+            apartmentPrice: 180000,
+            rent: 4.50
+        }];
+
+        const housingDataVianaDoCastelo = [{
+            year: 2014,
+            housePrice: 150000,
+            apartmentPrice: 110000,
+            rent: 5.00
+        }, {
+            year: 2015,
+            housePrice: 160000,
+            apartmentPrice: 120000,
+            rent: 5.10
+        }, {
+            year: 2016,
+            housePrice: 170000,
+            apartmentPrice: 130000,
+            rent: 5.20
+        }, {
+            year: 2017,
+            housePrice: 180000,
+            apartmentPrice: 140000,
+            rent: 5.30
+        }, {
+            year: 2018,
+            housePrice: 190000,
+            apartmentPrice: 150000,
+            rent: 5.40
+        }, {
+            year: 2019,
+            housePrice: 200000,
+            apartmentPrice: 160000,
+            rent: 5.50
+        }, {
+            year: 2020,
+            housePrice: 210000,
+            apartmentPrice: 170000,
+            rent: 5.60
+        }, {
+            year: 2021,
+            housePrice: 220000,
+            apartmentPrice: 180000,
+            rent: 5.70
+        }, {
+            year: 2022,
+            housePrice: 230000,
+            apartmentPrice: 190000,
+            rent: 5.80
+        }, {
+            year: 2023,
+            housePrice: 240000,
+            apartmentPrice: 200000,
+            rent: 5.90
+        }, {
+            year: 2024,
+            housePrice: 370000,
+            apartmentPrice: 290000,
+            rent: 4.50
+        }];
+
+        const housingDataEvora = [{
+            year: 2014,
+            housePrice: 120000,
+            apartmentPrice: 90000,
+            rent: 5.50
+        }, {
+            year: 2015,
+            housePrice: 130000,
+            apartmentPrice: 95000,
+            rent: 5.70
+        }, {
+            year: 2016,
+            housePrice: 140000,
+            apartmentPrice: 100000,
+            rent: 5.90
+        }, {
+            year: 2017,
+            housePrice: 150000,
+            apartmentPrice: 110000,
+            rent: 6.10
+        }, {
+            year: 2018,
+            housePrice: 160000,
+            apartmentPrice: 120000,
+            rent: 6.30
+        }, {
+            year: 2019,
+            housePrice: 170000,
+            apartmentPrice: 130000,
+            rent: 6.50
+        }, {
+            year: 2020,
+            housePrice: 180000,
+            apartmentPrice: 140000,
+            rent: 6.70
+        }, {
+            year: 2021,
+            housePrice: 190000,
+            apartmentPrice: 150000,
+            rent: 6.90
+        }, {
+            year: 2022,
+            housePrice: 200000,
+            apartmentPrice: 160000,
+            rent: 7.10
+        }, {
+            year: 2023,
+            housePrice: 210000,
+            apartmentPrice: 170000,
+            rent: 7.30
+        }, {
+            year: 2024,
+            housePrice: 320000,
+            apartmentPrice: 240000,
+            rent: 5.50 // Assuming an average of 5-6 €/m² for 2024
+        }];
+
+        const housingDataSetubal = [{
+            year: 2014,
+            housePrice: 140000,
+            apartmentPrice: 110000,
+            rent: 6.00
+        }, {
+            year: 2015,
+            housePrice: 150000,
+            apartmentPrice: 120000,
+            rent: 6.20
+        }, {
+            year: 2016,
+            housePrice: 160000,
+            apartmentPrice: 130000,
+            rent: 6.40
+        }, {
+            year: 2017,
+            housePrice: 170000,
+            apartmentPrice: 140000,
+            rent: 6.60
+        }, {
+            year: 2018,
+            housePrice: 180000,
+            apartmentPrice: 150000,
+            rent: 6.80
+        }, {
+            year: 2019,
+            housePrice: 190000,
+            apartmentPrice: 160000,
+            rent: 7.00
+        }, {
+            year: 2020,
+            housePrice: 200000,
+            apartmentPrice: 170000,
+            rent: 7.20
+        }, {
+            year: 2021,
+            housePrice: 210000,
+            apartmentPrice: 180000,
+            rent: 7.40
+        }, {
+            year: 2022,
+            housePrice: 220000,
+            apartmentPrice: 190000,
+            rent: 7.60
+        }, {
+            year: 2023,
+            housePrice: 230000,
+            apartmentPrice: 200000,
+            rent: 7.80
+        }, {
+            year: 2024,
+            housePrice: 370000,
+            apartmentPrice: 290000,
+            rent: 4.50
+        }];
+
+        const housingDataSantarem = [{
+            year: 2014,
+            housePrice: 150000,
+            apartmentPrice: 120000,
+            rent: 6.5
+        }, {
+            year: 2015,
+            housePrice: 155000,
+            apartmentPrice: 125000,
+            rent: 6.8
+        }, {
+            year: 2016,
+            housePrice: 160000,
+            apartmentPrice: 130000,
+            rent: 7.0
+        }, {
+            year: 2017,
+            housePrice: 170000,
+            apartmentPrice: 140000,
+            rent: 7.2
+        }, {
+            year: 2018,
+            housePrice: 180000,
+            apartmentPrice: 150000,
+            rent: 7.5
+        }, {
+            year: 2019,
+            housePrice: 190000,
+            apartmentPrice: 160000,
+            rent: 7.8
+        }, {
+            year: 2020,
+            housePrice: 210000,
+            apartmentPrice: 180000,
+            rent: 8.0
+        }, {
+            year: 2021,
+            housePrice: 230000,
+            apartmentPrice: 200000,
+            rent: 8.3
+        }, {
+            year: 2022,
+            housePrice: 250000,
+            apartmentPrice: 220000,
+            rent: 8.6
+        }, {
+            year: 2023,
+            housePrice: 280000,
+            apartmentPrice: 240000,
+            rent: 8.9
+        }, {
+            year: 2024,
+            housePrice: 300000,
+            apartmentPrice: 260000,
+            rent: 9.2
+        }, ];
+
+
+
+
+
+
+
+        const housingDataAveiro = [{
+            year: 2014,
+            housePrice: 150000,
+            apartmentPrice: 100000,
+            rent: 4.50,
+            electricityCost: 0.14,
+            waterCost: 2.50,
+            foodCost: 1.80
+        }, {
+            year: 2015,
+            housePrice: 160000,
+            apartmentPrice: 110000,
+            rent: 4.70,
+            electricityCost: 0.14,
+            waterCost: 2.60,
+            foodCost: 1.90
+        }, {
+            year: 2016,
+            housePrice: 170000,
+            apartmentPrice: 120000,
+            rent: 4.90,
+            electricityCost: 0.14,
+            waterCost: 2.70,
+            foodCost: 2.00
+        }, {
+            year: 2017,
+            housePrice: 190000,
+            apartmentPrice: 130000,
+            rent: 5.20,
+            electricityCost: 0.14,
+            waterCost: 2.80,
+            foodCost: 2.10
+        }, {
+            year: 2018,
+            housePrice: 210000,
+            apartmentPrice: 140000,
+            rent: 5.50,
+            electricityCost: 0.14,
+            waterCost: 2.90,
+            foodCost: 2.20
+        }, {
+            year: 2019,
+            housePrice: 230000,
+            apartmentPrice: 160000,
+            rent: 6.00,
+            electricityCost: 0.14,
+            waterCost: 3.00,
+            foodCost: 2.30
+        }, {
+            year: 2020,
+            housePrice: 250000,
+            apartmentPrice: 180000,
+            rent: 6.50,
+            electricityCost: 0.14,
+            waterCost: 3.10,
+            foodCost: 2.40
+        }, {
+            year: 2021,
+            housePrice: 270000,
+            apartmentPrice: 200000,
+            rent: 6.80,
+            electricityCost: 0.14,
+            waterCost: 3.20,
+            foodCost: 2.50
+        }, {
+            year: 2022,
+            housePrice: 300000,
+            apartmentPrice: 220000,
+            rent: 7.00,
+            electricityCost: 0.14,
+            waterCost: 3.30,
+            foodCost: 2.60
+        }, {
+            year: 2023,
+            housePrice: 330000,
+            apartmentPrice: 240000,
+            rent: 7.50,
+            electricityCost: 0.15,
+            waterCost: 3.40,
+            foodCost: 2.70
+        }, {
+            year: 2024,
+            housePrice: 384000,
+            apartmentPrice: 250000,
+            rent: 7.75,
+            electricityCost: 0.14,
+            waterCost: 2.50,
+            foodCost: 2.20
+        }];
+
+
+
+        let housingDataPortugal = []; // Declare a global variable to store aggregated data
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // Aggregate data across all districts
+            const allHousingData = [
+                housingDataLisbon, housingDataPorto, housingDataGuarda,
+                housingDataViseu, housingDataLeiria, housingDataPortalegre,
+                housingDataCasteloBranco, housingDataBeja, housingDataBraga,
+                housingDataCoimbra, housingDataFaro, housingDataBraganca,
+                housingDataVianaDoCastelo, housingDataEvora, housingDataSetubal,
+                housingDataSantarem, housingDataAveiro
+            ];
+
+            // Calculate average data for Portugal and update global variable
+            housingDataPortugal = [];
+            for (let year = 2014; year <= 2024; year++) {
+                let totalHousePrice = 0;
+                let totalApartmentPrice = 0;
+                let count = 0;
+
+                allHousingData.forEach(districtData => {
+                    const dataForYear = districtData.find(d => d.year === year);
+                    if (dataForYear) {
+                        totalHousePrice += dataForYear.housePrice;
+                        totalApartmentPrice += dataForYear.apartmentPrice;
+                        count++;
+                    }
+                });
+
+                if (count > 0) {
+                    housingDataPortugal.push({
+                        year: year,
+                        housePrice: totalHousePrice / count,
+                        apartmentPrice: totalApartmentPrice / count
+                    });
+                }
+            }
+
+            // Always use the global variable to render the chart
+            drawChart();
+        });
+        //-----------------------------------------------------------------------------------------------------
+
+        // Add markers for district capitals
+        // Keep track of markers
+
+
+        // Initialize markers and store them in an object
+        // Apply filter to hide markers based on maximum house price for 2024
+
+
+        // Initialize or reinitialize the map
+        const pinnedCities = new Set(); // Keep track of pinned cities
+
+        // Initialize or reinitialize the map
+        let currentFilter = null; // Track the current filter value
+
+        // Initialize or reinitialize the map
+        function initializeMap(filteredDistricts = districtCapitals) {
+            // Clear the map container to reinitialize it
+            if (map) {
+                map.remove(); // Completely remove the existing map
+            }
+
+            map = L.map('map').setView([39.5, -8.0], 6);
+
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+            }).addTo(map);
+
+            // Add markers for the filtered districts
+            Object.entries(filteredDistricts).forEach(([name, coords]) => {
+                const marker = L.circleMarker(coords, {
+                    radius: 8,
+                    color: pinnedCities.has(name) ? 'red' : 'blue', // Indicate pinned state
+                    fillColor: pinnedCities.has(name) ? 'lightcoral' : 'lightblue',
+                    fillOpacity: 0.7
+                }).addTo(map);
+
+                // Assign click event for graph display
+                marker.on('click', () => {
+                    togglePin(name);
+                    drawChart(); // Update graph based on pinned cities
+                });
+
+                // Store marker reference
+                districtMarkers[name] = marker;
+            });
+        }
+
+        // Apply filter to restrict markers based on house prices
+        function applyFilter() {
+            const maxPrice = parseFloat(document.getElementById('priceFilter').value);
+
+            if (isNaN(maxPrice)) {
+                alert('Please enter a valid number for the price filter.');
+                return;
+            }
+
+            currentFilter = maxPrice; // Update the current filter
+            updateMarkers(); // Reapply the filter to the markers
+        }
+
+        // Remove all filters and reload all markers
+        function removeFilter() {
+            currentFilter = null; // Clear the current filter
+            updateMarkers(); // Reload all markers without filtering
+        }
+
+        // Update markers based on the current filter
+        function updateMarkers() {
+            const filteredDistricts = {};
+
+            // Filter districts based on the current filter
+            Object.entries(districtCapitals).forEach(([district, coords]) => {
+                const cityData = getCityData(district);
+                const data2024 = cityData.data.find(d => d.year === 2024);
+
+                if (!currentFilter || (data2024 && data2024.housePrice <= currentFilter)) {
+                    filteredDistricts[district] = coords; // Include district if it passes the filter
+                }
+            });
+
+            // Reinitialize the map with the filtered districts
+            initializeMap(filteredDistricts);
+        }
+
+        // Toggle pinning of a city
+        function togglePin(cityName) {
+            if (pinnedCities.has(cityName)) {
+                pinnedCities.delete(cityName); // Unpin if already pinned
+                // Change marker color back to blue
+                districtMarkers[cityName].setStyle({
+                    fillColor: 'lightblue',
+                    color: 'blue'
+                });
+            } else {
+                pinnedCities.add(cityName); // Pin if not already pinned
+                // Change marker color to red when pinned
+                districtMarkers[cityName].setStyle({
+                    fillColor: 'lightcoral',
+                    color: 'red'
+                });
+            }
+            drawChart(); // Update the chart with pinned cities data
+        }
+
+        function initializeMap(filteredDistricts = districtCapitals) {
+            // Clear the map container to reinitialize it
+            if (map) {
+                map.remove(); // Completely remove the existing map
+            }
+
+            map = L.map('map').setView([39.5, -8.0], 6);
+
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+            }).addTo(map);
+
+            // Add markers for the filtered districts
+            Object.entries(filteredDistricts).forEach(([name, coords]) => {
+                const marker = L.circleMarker(coords, {
+                    radius: 8,
+                    color: pinnedCities.has(name) ? 'red' : 'blue', // Set marker color based on pin state
+                    fillColor: pinnedCities.has(name) ? 'lightcoral' : 'lightblue',
+                    fillOpacity: 0.7
+                }).addTo(map);
+
+                // Assign click event for graph display
+                marker.on('click', () => {
+                    togglePin(name); // Toggle pin state and update color
+                });
+
+                // Store marker reference
+                districtMarkers[name] = marker;
+            });
+        }
+        // Initial map setup
+        initializeMap();
+        // Draw chart for all pinned cities
+        function drawChart() {
+            document.getElementById('chart').style.display = 'block';
+
+            // Clear previous chart
+            const chartContainer = d3.select("#chart");
+            chartContainer.selectAll("*").remove();
+
+            // Set dimensions for the chart
+            const width = 600;
+            const height = 400;
+            const margin = {
+                top: 30,
+                right: 180,
+                bottom: 50,
+                left: 70
+            };
+
+            const svg = chartContainer.append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            // Define scales
+            const x = d3.scaleLinear()
+                .domain([2014, 2024])
+                .range([0, width]);
+
+            const y = d3.scaleLinear()
+                .domain([0, 1200000]) // Adjust based on your maximum price
+                .range([height, 0]);
+
+            // Add gridlines
+            const gridlinesX = d3.axisBottom(x).tickSize(-height).tickFormat("");
+            svg.append("g")
+                .attr("class", "grid")
+                .attr("transform", `translate(0,${height})`)
+                .call(gridlinesX)
+                .selectAll("line")
+                .style("stroke", "#e0e0e0")
+                .style("stroke-dasharray", "3,3");
+
+            const gridlinesY = d3.axisLeft(y).tickSize(-width).tickFormat("");
+            svg.append("g")
+                .attr("class", "grid")
+                .call(gridlinesY)
+                .selectAll("line")
+                .style("stroke", "#e0e0e0")
+                .style("stroke-dasharray", "3,3");
+
+            // Add axes
+            svg.append("g")
+                .attr("transform", `translate(0,${height})`)
+                .call(d3.axisBottom(x).ticks(6).tickFormat(d3.format("d")))
+                .style("font-size", "12px");
+
+            svg.append("g")
+                .call(d3.axisLeft(y).ticks(6))
+                .style("font-size", "12px");
+
+            // Add labels
+            svg.append("text")
+                .attr("x", width / 2)
+                .attr("y", height + margin.bottom - 10)
+                .attr("text-anchor", "middle")
+                .style("font-size", "14px")
+                .style("font-weight", "bold")
+                .text("Year");
+
+            svg.append("text")
+                .attr("x", -(height / 2))
+                .attr("y", -margin.left + 20)
+                .attr("text-anchor", "middle")
+                .style("font-size", "14px")
+                .style("font-weight", "bold")
+                .attr("transform", "rotate(-90)")
+                .text("Price (€)");
+
+            // Draw static lines for house and apartment prices (Portugal average)
+            const lineGenerator = d3.line()
+                .x(d => x(d.year))
+                .curve(d3.curveNatural); // Smooth curves
+
+            // Static line for average house prices
+            svg.append("path")
+                .datum(housingDataPortugal)
+                .attr("class", "line-house")
+                .attr("d", lineGenerator.y(d => y(d.housePrice)))
+                .style("stroke", "steelblue")
+                .style("stroke-width", 2)
+                .style("fill", "none");
+
+            // Static line for average apartment prices
+            svg.append("path")
+                .datum(housingDataPortugal)
+                .attr("class", "line-apartment")
+                .attr("d", lineGenerator.y(d => y(d.apartmentPrice)))
+                .style("stroke", "orange")
+                .style("stroke-width", 2)
+                .style("fill", "none");
+
+            // Dynamic lines for pinned cities
+            pinnedCities.forEach(city => {
+                const cityData = getCityData(city);
+                const data = cityData.data;
+                const color = cityData.color;
+
+                // House price line for pinned city
+                svg.append("path")
+                    .datum(data)
+                    .attr("d", lineGenerator.y(d => y(d.housePrice)))
+                    .style("stroke", d3.rgb(color).brighter(1))
+                    .style("stroke-width", 3)
+                    .style("fill", "none")
+                    .style("opacity", 0.9);
+
+                // Apartment price line for pinned city
+                svg.append("path")
+                    .datum(data)
+                    .attr("d", lineGenerator.y(d => y(d.apartmentPrice)))
+                    .style("stroke", d3.rgb(color).darker(1))
+                    .style("stroke-width", 3)
+                    .style("fill", "none")
+                    .style("opacity", 0.9);
+            });
+
+            // Tooltip logic
+            const tooltip = d3.select("body").append("div")
+                .attr("class", "tooltip")
+                .style("position", "absolute")
+                .style("background-color", "#333")
+                .style("color", "#fff")
+                .style("padding", "8px")
+                .style("border-radius", "5px")
+                .style("opacity", 0);
+
+            function showTooltip(event, content) {
+                tooltip.html(content)
+                    .style("left", `${event.pageX + 10}px`)
+                    .style("top", `${event.pageY}px`)
+                    .style("opacity", 1);
+            }
+
+            function hideTooltip() {
+                tooltip.style("opacity", 0);
+            }
+
+            // Legend for both static and dynamic data
+            const legend = svg.append("g")
+                .attr("transform", `translate(${width + 30}, 20)`);
+
+            // Static legend for Portugal average data
+            legend.append("rect")
+                .attr("x", 0)
+                .attr("y", 0)
+                .attr("width", 10)
+                .attr("height", 10)
+                .attr("fill", "steelblue");
+            legend.append("text")
+                .attr("x", 20)
+                .attr("y", 10)
+                .text("Portugal Avg - House Price")
+                .style("font-size", "12px");
+
+            legend.append("rect")
+                .attr("x", 0)
+                .attr("y", 20)
+                .attr("width", 10)
+                .attr("height", 10)
+                .attr("fill", "orange");
+            legend.append("text")
+                .attr("x", 20)
+                .attr("y", 30)
+                .text("Portugal Avg - Apartment Price")
+                .style("font-size", "12px");
+
+            // Dynamic legend for pinned cities
+            let legendIndex = 2; // Start from 2 to skip the static entries
+            pinnedCities.forEach(city => {
+                const cityData = getCityData(city);
+
+                legend.append("rect")
+                    .attr("x", 0)
+                    .attr("y", legendIndex * 25)
+                    .attr("width", 10)
+                    .attr("height", 10)
+                    .attr("fill", d3.rgb(cityData.color).brighter(1));
+                legend.append("text")
+                    .attr("x", 20)
+                    .attr("y", legendIndex * 25 + 9)
+                    .text(`${city} - House Price`)
+                    .style("font-size", "12px");
+
+                legendIndex++;
+
+                legend.append("rect")
+                    .attr("x", 0)
+                    .attr("y", legendIndex * 25)
+                    .attr("width", 10)
+                    .attr("height", 10)
+                    .attr("fill", d3.rgb(cityData.color).darker(1));
+                legend.append("text")
+                    .attr("x", 20)
+                    .attr("y", legendIndex * 25 + 9)
+                    .text(`${city} - Apartment Price`)
+                    .style("font-size", "12px");
+
+                legendIndex++;
+            });
+        }
+
+
+
+
+        // Helper function to get data for a city
+        // Define the city-color mapping
+
+
+        // Updated getCityData function
+        function getCityData(cityName) {
+            let cityColors = {
+                "Lisboa": "#1f77b4", // Blue
+                "Porto": "#ff7f0e", // Orange
+                "Aveiro": "#2ca02c", // Green
+                "Braga": "#d62728", // Red
+                "Coimbra": "#9467bd", // Purple
+                "Faro": "#8c564b", // Brown
+                "Bragança": "#e377c2", // Pink
+                "VianaDoCastelo": "#7f7f7f", // Grey
+                "Evora": "#bcbd22", // Olive
+                "Setúbal": "#17becf", // Cyan
+                "Leiria": "#ff99cc", // Light Pink
+                "Portalegre": "#66c2a5", // Light Green
+                "CasteloBranco": "#fc8d62", // Light Orange
+                "Santarém": "#e34a33", // Dark Red
+                "Beja": "#f1c40f", // Yellow
+                "Viseu": "#9b59b6", // Purple
+                "PortoAlegre": "#ff6347", // Tomato Red
+            };
+
+            switch (cityName) {
+                case "Lisboa":
+                    return {
+                        data: housingDataLisbon,
+                        color: cityColors.Lisboa
+                    };
+                case "Porto":
+                    return {
+                        data: housingDataPorto,
+                        color: cityColors.Porto
+                    };
+                case "Guarda":
+                    return {
+                        data: housingDataGuarda,
+                        color: cityColors.Aveiro
+                    };
+
+                case "Beja":
+                    return {
+                        data: housingDataBeja,
+                        color: cityColors.Porto
+                    };
+                case "Aveiro":
+                    return {
+                        data: housingDataAveiro,
+                        color: cityColors.Aveiro
+                    };
+                case "Braga":
+                    return {
+                        data: housingDataBraga,
+                        color: cityColors.Braga
+                    };
+                case "Coimbra":
+                    return {
+                        data: housingDataCoimbra,
+                        color: cityColors.Coimbra
+                    };
+                case "Faro":
+                    return {
+                        data: housingDataFaro,
+                        color: cityColors.Faro
+                    };
+                case "Bragança":
+                    return {
+                        data: housingDataBraganca,
+                        color: cityColors.Bragança
+                    };
+                case "Viana do Castelo":
+                    return {
+                        data: housingDataVianaDoCastelo,
+                        color: cityColors.VianaDoCastelo
+                    };
+                case "Évora":
+                    return {
+                        data: housingDataEvora,
+                        color: cityColors.Evora
+                    };
+                case "Setúbal":
+                    return {
+                        data: housingDataSetubal,
+                        color: cityColors.Setúbal
+                    };
+                case "Leiria":
+                    return {
+                        data: housingDataLeiria,
+                        color: cityColors.Leiria
+                    };
+                case "Portalegre":
+                    return {
+                        data: housingDataPortalegre,
+                        color: cityColors.Portalegre
+                    };
+                case "Castelo Branco":
+                    return {
+                        data: housingDataCasteloBranco,
+                        color: cityColors.CasteloBranco
+                    };
+                case "Santarém":
+                    return {
+                        data: housingDataSantarem,
+                        color: cityColors.Santarém
+                    };
+                case "Beja":
+                    return {
+                        data: housingDataBeja,
+                        color: cityColors.Beja
+                    };
+                case "Viseu":
+                    return {
+                        data: housingDataViseu,
+                        color: cityColors.Viseu
+                    };
+                case "PortoAlegre":
+                    return {
+                        data: housingDataPortalegre,
+                        color: cityColors.PortoAlegre
+                    };
+                default:
+                    return {
+                        data: [],
+                        color: "gray"
+                    }; // Default if city is not found
+            }
+        }
+    </script>
+</body>
+
+</html>
